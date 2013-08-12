@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    {% block stylesheets %}
+      <link href="{{ asset('bootstrap/css/bootstrap.css') }}" type="text/css" rel="stylesheet" />
+      <link href="{{ asset('bootstrap/css/bootstrap-responsive.css') }}" type="text/css" rel="stylesheet" />
+      {#<link href="{{ asset('css/styles.css') }}" type="text/css" rel="stylesheet" />#}
+      <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery.ui.all.css" type="text/css" rel="stylesheet" />
+    {% endblock %}
+    <title>{% block title %}{{ block('page_title') }} - Dominica Integrated Information System for Health{% endblock %}</title>
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+  </head>
+
+  <body>
+    {% if nodisp_navbar is not defined %}
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          {% if menu is not defined %}
+            {% set menu = null %}
+          {% endif %}
+          <a class="brand" href="{% if menu == 'home' %}{{ path('homepage') }}
+                                 {% elseif menu == 'scomdis' %}{{ path('scomdis') }}
+                                 {% elseif menu == 'pm1' %}{{ path('pm1') }}
+                                 {% elseif menu == 'eyebase' %}{{ path('eyebase') }}
+                                 {% elseif menu == 'admin' %}{{ path('admin') }}
+                                 {% endif %}">{{ block('product_name') }} </a>
+          <div class="nav-collapse">
+          {% block nav %}
+          <ul class="nav">
+            <li class="{% if menu == 'home' %}active{% endif %}">
+              <a href="{{ path('homepage') }}">Menu</a>
+            </li>
+            <li class="{% if menu == 'openmrs' %}active{% endif %}">
+              {% if is_granted('ROLE_OPENMRS_USER') %}
+              <a href="http://openmrs.org/">OpenMRS</a>
+              {% else %}
+              <p>OpenMRS</p>
+              {% endif %}
+            </li>
+            <li class="{% if menu == 'scomdis' %}active{% endif %}">
+              {% if is_granted('ROLE_SCOMDIS_USER') %}
+              <a href="{{ path('scomdis') }}">SComDis</a>
+              {% else %}
+              <p>SComDis</p>
+              {% endif %}
+            </li>
+            <li class="{% if menu == 'pm1' %}active{% endif %}">
+              {% if is_granted('ROLE_PM1_USER') %}
+              <a href="{{ path('pm1') }}">PM.1</a>
+              {% else %}
+              <p>PM.1</p>
+              {% endif %}
+            </li>
+            <li class="{% if menu == 'eyebase' %}active{% endif %}">
+              {% if is_granted('ROLE_EYEBASE_USER') %}
+              <a href="{{ path('eyebase') }}">EyeBase</a>
+              {% else %}
+              <p>EyeBase</p>
+              {% endif %}
+            </li>
+          </ul>
+          {% endblock %}
+          </div>
+          <div class="btn-group pull-right">
+            <a class="btn dropdown-toggle" href="#" data-toggle="dropdown">
+              <i class="icon-user"></i>
+              {% if app.user.displayname is defined %}
+                {{ app.user.displayname }}
+              {% else %}
+                {{ app.user ? app.user.username : 'Anonymous' }}
+              {% endif %}
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a href="{{ path('common_profile_show') }}">View Profile</a>
+              </li>
+              {% if is_granted('ROLE_ADMIN') %}
+              <li>
+                <a href="{{ path('admin') }}">Go to Admin Site</a>
+              </li>
+              {% endif %}
+              <li class="divider"></li>
+              <li>
+                <a href="{{ path('common_logout') }}">Sign Out</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+      
+    {% block body %}
+    {% endblock %}
+      
+    <footer>
+      <hr>
+      <p>&copy; HIU.MOH 2013</p>
+    </footer>
+    
+    {% block javascripts %}
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+      <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+      <script src="{{ asset('/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
+      <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    {% endblock %}    
+  </body>
+</html>

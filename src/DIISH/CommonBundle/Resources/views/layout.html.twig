@@ -1,0 +1,33 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {% stylesheets '@DIISHCommonBundle/Resources/public/css/main.css' %}
+    <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+  {% endstylesheets %}
+{% endblock %}
+    
+{% block body %}
+<div class="{% if nodisp_navbar is not defined %}wrapper{% else %}wrapper-nonavbar{% endif %}">
+  <div class="hero-unit">
+  <h1>Dominica Integrated Information System for Health</h1>
+  </div>
+
+  <div class="container">
+    {% for flashMessage in app.session.flashbag.get('success') %}
+      <div class="alert alert-success">
+        {{ flashMessage }}
+      </div>
+    {% endfor %}
+    
+    {% for flashMessage in app.session.flashbag.get('error') %}
+      <div class="alert alert-error">
+        {{ flashMessage }}
+      </div>
+    {% endfor %}
+      
+    {% block content %}{% endblock %}
+
+  </div>
+</div>
+{% endblock %}

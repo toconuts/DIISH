@@ -1,0 +1,46 @@
+{% extends '::base.html.twig' %}
+
+{% set nodisp_navbar = 'true' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {% stylesheets '@DIISHCommonBundle/Resources/public/css/main.css'
+                 '@DIISHSComDisBundle/Resources/public/css/content.css' %}
+    <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+  {% endstylesheets %}
+{% endblock %}
+
+{% block body %}    
+  <div class="wrapper">
+    <div class="container">
+      {% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="alert alert-success">
+          {{ flashMessage }}
+        </div>
+      {% endfor %}
+
+      {% for flashMessage in app.session.flashbag.get('warn') %}
+        <div class="alert alert">
+          {{ flashMessage }}
+        </div>
+      {% endfor %}
+
+      {% for flashMessage in app.session.flashbag.get('error') %}
+        <div class="alert alert-error">
+          {{ flashMessage }}
+        </div>
+      {% endfor %}
+      
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+    {% javascripts
+        '@DIISHSComDisBundle/Resources/public/js/jquery_hselect.js'
+        '@DIISHSComDisBundle/Resources/public/js/epiweek_calc.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

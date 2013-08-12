@@ -1,0 +1,17 @@
+{% extends 'DIISHCommonBundle::layout.html.twig' %}
+
+{% block page_title 'Sign in' %}
+{% block product_name 'DIISH' %}
+{% set nodisp_navbar = '' %}
+
+{% block content %}
+<div class="row">
+  <div class="span8">
+    {% include 'DIISHCommonBundle::productMenu.html.twig' %}
+  </div>
+
+  <div class="span4">
+    {% include 'DIISHCommonBundle::signinBox.html.twig' %}
+  </div>
+</div>
+{% endblock %}

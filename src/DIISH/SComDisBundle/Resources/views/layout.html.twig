@@ -1,0 +1,170 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+  {{ parent() }}
+  {% stylesheets '@DIISHCommonBundle/Resources/public/css/main.css'
+                 '@DIISHSComDisBundle/Resources/public/css/content.css' %}
+    <link href="{{ asset_url }}" type="text/css" rel="stylesheet" />
+  {% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+<div class="wrapper-with-sidebar">
+  <div class="container-fluid">
+    <div clas="row-fluid">
+      {% block sidebar %}
+      <div class="span2">
+        <div class="well sidebar-nav">
+          {% if sidebar_menu is not defined %}
+            {% set sidebar_menu = null %}
+          {% endif %}
+          <ul class="nav nav-list">
+            <li class="nav-header">Entry</li>
+            <li {% if sidebar_menu == 'scomdis_list' %}class="active"{% endif %}>
+              <a href="{{ path('scomdis_list') }}">List</a></li>
+            <li {% if sidebar_menu == 'scomdis_search' %}class="active"{% endif %}>
+              <a href="{{ path('scomdis_search') }}">Search</a></li>
+            <li {% if sidebar_menu == 'scomdis_new' %}class="active"{% endif %}>
+              <a href="{{ path('scomdis_new') }}">New</a></li>
+            
+            <li class="nav-header">Report</li>
+            <li {% if sidebar_menu == 'scomdis_report_carpha_weekly' %}class="active"{% endif %}>
+              <a href="{{ path('scomdis_report_carpha_weekly') }}">CARPHA Weekly</a></li>
+            
+            <li class="nav-header">Chart</li>
+            <li {% if sidebar_menu == 'scomdis_chart_trend' %}class="active"{% endif %}>
+              <a href="{{ path('scomdis_chart_trend') }}">Trend</a></li>
+            <li {% if sidebar_menu == 'scomdis_chart_prediction' %}class="active"{% endif %}>
+              <a href="{{ path('scomdis_chart_prediction') }}">Prediction</a></li>
+            <li {% if sidebar_menu == 'scomdis_chart_coefficient' %}class="active"{% endif %}>
+              <a href="{{ path('scomdis_chart_coefficient') }}">Seasonal Coefficient</a></li>
+            
+            <li class="nav-header">Map</li>
+            <li {% if sidebar_menu == 'scomdis_map_epidemic_phase' %}class="active"{% endif %}>
+              <a href="{{ path('scomdis_map_epidemic_phase') }}">Epidemic Phase</a></li>
+            
+            <li class="nav-header">Outbreak</li>
+            <li {% if sidebar_menu == 'scomdis_outbreak' %}class="active"{% endif %}>
+              <a href="{{ path('scomdis_outbreak') }}">List</a></li>
+            <li {% if sidebar_menu == 'scomdis_outbreak_search' %}class="active"{% endif %}>
+              <a href="{{ path('scomdis_outbreak_search') }}">Search</a></li>
+            <li {% if sidebar_menu == 'scomdis_outbreak_new' %}class="active"{% endif %}>
+              <a href="{{ path('scomdis_outbreak_new') }}">New</a></li>
+            
+            {% if is_granted('ROLE_ADMIN') %}
+            <li class="nav-header">Maintenance</li>
+            <li {% if sidebar_menu == 'scomdis_admin_clinic' %}class="active"{% endif %}>
+              <a href="{{ path('scomdis_admin_clinic') }}">Clinic</a></li>
+            <li {% if sidebar_menu == 'scomdis_admin_sentinel_site' %}class="active"{% endif %}>
+              <a href="{{ path('scomdis_admin_sentinel_site') }}">Sentinel Site</a></li>
+            <li {% if sidebar_menu == 'scomdis_admin_district' %}class="active"{% endif %}>
+              <a href="{{ path('scomdis_admin_district') }}">District</a></li>
+            <li {% if sidebar_menu == 'scomdis_admin_syndrome4surveillance' %}class="active"{% endif %}>
+              <a href="{{ path('scomdis_admin_syndrome4surveillance') }}">Syndrome</a></li>
+            <li {% if sidebar_menu == 'scomdis_admin_syndrome4outbreak' %}class="active"{% endif %}>
+              <a href="{{ path('scomdis_admin_syndrome4outbreak') }}">Syndrome for outbreak</a></li>
+            <li {% if sidebar_menu == 'scomdis_admin_phase' %}class="active"{% endif %}>
+              <a href="{{ path('scomdis_admin_phase') }}">Phase</a></li>
+            <li {% if sidebar_menu == 'scomdis_admin_pmh' %}class="active"{% endif %}>
+              <a href="{{ path('scomdis_admin_pmh') }}">PMH</a></li>
+            <li {% if sidebar_menu == 'scomdis_admin_import' %}class="active"{% endif %}>
+              <a href="{{ path('scomdis_admin_import') }}">Import</a></li>
+            {% endif %}            
+          </ul>
+        </div>
+      </div>
+      {% endblock %}
+
+      <div class="span10">
+        <div class="hero-unit">
+          <h1>{% block content_title %}{{ block('content_title') }}{% endblock %}</h1>
+        </div>
+        <hr>
+        {% for flashMessage in app.session.flashbag.get('success') %}
+          <div class="alert alert-success">
+            {{ flashMessage }}
+          </div>
+        {% endfor %}
+        
+        {% for flashMessage in app.session.flashbag.get('warn') %}
+          <div class="alert alert">
+            {{ flashMessage }}
+          </div>
+        {% endfor %}
+
+        {% for flashMessage in app.session.flashbag.get('error') %}
+          <div class="alert alert-error">
+            {{ flashMessage }}
+          </div>
+        {% endfor %}
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+    
+    {% javascripts
+        '@DIISHSComDisBundle/Resources/public/js/jquery_hselect.js'
+        '@DIISHSComDisBundle/Resources/public/js/epiweek_calc.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    
+<script>
+$(".epi-weekend").datepicker({ 
+  dateFormat: 'dd/mm/yy',
+  showWeek: true,
+  changeMonth: true,
+  changeYear: true,
+  calculateWeek: epiWeekCalc,
+  onSelect: function(dat, ins) {
+  var date = $(this).datepicker('getDate');
+  var day = date.getDay();
+  if (day != 6) {
+    date = new Date(date.getFullYear(), date.getMonth(), date.getDate() + (6 - day));
+  }
+
+  $(".epi-weekend").val(
+      (date.getDate() < 10 ? '0' : '') + date.getDate() + "/"
+   + ((date.getMonth() + 1) < 10 ? '0' : '') + (date.getMonth() + 1) + "/" 
+   + date.getFullYear()
+  );
+
+  var week = epiWeekCalc(date);
+  var year = date.getFullYear()
+  if (week >= 52 && (date.getMonth() + 1) == 1) {
+    year -= 1;
+  } else if (week == 1 && (date.getMonth() + 1) == 12) {
+    year += 1;
+  }
+
+  $(".epi-weekOfYear").val(week);
+  $(".epi-year").val(year);
+  }
+});
+</script>
+<script>
+$(".epi-date").datepicker({ 
+dateFormat: 'dd/mm/yy',
+  showWeek: true,
+  changeMonth: true,
+  changeYear: true,
+  calculateWeek: epiWeekCalc
+});
+</script>
+<script>
+$('#sentinelsite').change(function() {
+  parents = new Array('#sentinelsite');
+  $('#clinic').hselect(parents);
+});
+</script>
+<script>
+$(document).ready(function() {
+  $('#sentinelsite').trigger('change');
+});
+</script>
+
+{% endblock %}

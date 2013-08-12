@@ -1,0 +1,40 @@
+{% extends 'DIISHAdminBundle::layout.html.twig' %}
+
+{% block page_title 'Update Group&apos;s profile - Admin' %}
+{% block product_name 'Admin' %}
+{% block content_title 'Update Group&apos;s profile' %}
+
+{% set menu = 'admin' %}
+{% set sidebar_menu = 'admin_group' %}
+
+{% block content %}
+
+<table class="table table-striped table-bordered">
+  <tbody>
+    <tr>
+      <th>ID</th>
+      <td>{{ group.id }}</td>
+    </tr>
+    <tr>
+      <th>Name</th>
+      <td>{{ group.name }}</td>
+    </tr>
+    <tr>
+      <th>Role</th>
+      <td>{{ group.role }}</td>
+    </tr>
+    <tr>
+      <th>Created at</th>
+      <td>{{ group.createdAt|date('Y/m/d') }}</td>
+    </tr>
+    <tr>
+      <th>Updated at</th>
+      <td>{{ group.updatedAt|date('Y/m/d') }}</td>
+    </tr>
+  </tbody>
+</table>
+  <div class="form-actions">
+      <a href="{{ pre_url }}" class="btn">&laquo; Back</a>
+  </div>
+
+{% endblock %}
