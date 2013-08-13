@@ -7,13 +7,13 @@
 {% block javascripts %}
   {{ parent() }}
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-{#<script type="text/javascript" src="{{ asset('diishscomdis/js/latlng_district.js') }}"></script>
-<script type="text/javascript" src="{{ asset('diishscomdis/js/latlng_clinics.js') }}"></script>#}
+
 {% javascripts
         '@DIISHSComDisBundle/Resources/public/js/latlng_district.js'
         '@DIISHSComDisBundle/Resources/public/js/latlng_clinics.js' %}
         <script src="{{ asset_url }}"></script>
 {% endjavascripts %}
+
 <script>
 
  // Create an object containing id of LatLng, grade, and coefficient.
@@ -65,11 +65,11 @@ function initialize() {
   for (var clinic in clinics) {          
     // Construct the circle for each value in clinics. We scale phase by 300.
     var circle = new google.maps.Circle({
-      //strokeColor: '#48325A',
+      {#strokeColor: '#48325A',#}
       strokeColor: 'green',
       strokeOpacity: 0.8,
       strokeWeight: 2,
-      //fillColor: '#48325A',
+      {#fillColor: '#48325A',#}
       fillColor: 'blue',
       fillOpacity: 0.5,
       map: map,
