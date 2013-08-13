@@ -53,7 +53,7 @@ class CARPHAReportService
         $this->reportSites = 0;
         
         $this->managerRegistry = $managerRegistry;
-        $manager = $this->managerRegistry->getEntityManager('scomdis');
+        $manager = $this->managerRegistry->getManager('scomdis');
         $syndromes = $manager->getRepository('DIISHSComDisBundle:Syndrome4Surveillance')->findAll();
         foreach ($syndromes as $syndrome) {
             $this->syndrome[$syndrome->getId()] = 0;
@@ -70,7 +70,7 @@ class CARPHAReportService
      */
     protected function setReportValues()
     {
-        $manager = $this->managerRegistry->getEntityManager('scomdis');
+        $manager = $this->managerRegistry->getManager('scomdis');
         $surveillanceRepository = $manager->getRepository('DIISHSComDisBundle:Surveillance');
         $surveillances = $surveillanceRepository->findBy(
                 array('weekend' => $this->weekend)

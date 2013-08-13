@@ -31,7 +31,7 @@ class LogService
         
     protected function log($message, $username, $level)
     {
-        $manager = $this->managerRegistry->getEntityManager('scomdis');
+        $manager = $this->managerRegistry->getManager('scomdis');
         $repository  = $manager->getRepository('DIISHSComDisBundle:Log');
         
         $log = new Log($message, $username, $level);

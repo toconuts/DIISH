@@ -87,7 +87,7 @@ class EpidemicPhaseService
     
     protected function mergePMH(EpidemicPhase $epidemicPhase)
     {
-        $manager = $this->managerRegistry->getEntityManager('scomdis');
+        $manager = $this->managerRegistry->getManager('scomdis');
         $repository = $manager->getRepository('DIISHSComDisBundle:PMH');
         $pmh = $repository->findAll();
         $epidemicPhase->mergePMH($pmh);
@@ -95,7 +95,7 @@ class EpidemicPhaseService
     
     protected function setPhase(EpidemicPhase $epidemicPhase)
     {
-        $manager = $this->managerRegistry->getEntityManager('scomdis');
+        $manager = $this->managerRegistry->getManager('scomdis');
         $repository = $manager->getRepository('DIISHSComDisBundle:Phase');
         $phases = $repository->findAll();
         $epidemicPhase->setPhases($phases);
@@ -103,7 +103,7 @@ class EpidemicPhaseService
     
     protected function setSyndromes(EpidemicPhase $epidemicPhase, $ids)
     {
-        $manager = $this->managerRegistry->getEntityManager('scomdis');
+        $manager = $this->managerRegistry->getManager('scomdis');
         $repository = $manager->getRepository('DIISHSComDisBundle:Syndrome4Surveillance');
         
         foreach($ids as $id) {
@@ -113,7 +113,7 @@ class EpidemicPhaseService
    
     protected function setDistricts(EpidemicPhase $epidemicPhase, SurveillanceCoefficientCriteria $criteria)
     {
-        $manager = $this->managerRegistry->getEntityManager('scomdis');
+        $manager = $this->managerRegistry->getManager('scomdis');
         $repository  = $manager->getRepository('DIISHSComDisBundle:Surveillance');
 
         // Create epidemic phase district objects
@@ -144,7 +144,7 @@ class EpidemicPhaseService
             EpidemicPhase $epidemicPhase,
             SurveillanceCoefficientCriteria $criteria)
     {
-        $manager = $this->managerRegistry->getEntityManager('scomdis');
+        $manager = $this->managerRegistry->getManager('scomdis');
         $districts = $manager->getRepository('DIISHSComDisBundle:District')->findAll();
         
         $epidemicPhaseDistricts = array();

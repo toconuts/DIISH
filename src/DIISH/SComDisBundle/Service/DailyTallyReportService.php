@@ -35,7 +35,7 @@ class DailyTallyReportService
     
     public function temp()
     {
-        $manager = $this->managerRegistry->getEntityManager('scomdis');
+        $manager = $this->managerRegistry->getManager('scomdis');
         $surveillanceRepository = $manager->getRepository('DIISHSComDisBundle:Surveillance');
         $this->surveillance = $surveillanceRepository->findOneBy(
                 array('weekend' => $this->weekend),

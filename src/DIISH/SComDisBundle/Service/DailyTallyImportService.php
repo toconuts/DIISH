@@ -221,7 +221,7 @@ class DailyTallyImportService
         set_time_limit(600);
         ini_set("memory_limit", "1G");
         
-        $manager = $this->managerRegistry->getEntityManager('common');
+        $manager = $this->managerRegistry->getManager('common');
         
         $this->clear();
         $this->logInfo("Start Importing");
@@ -246,7 +246,7 @@ class DailyTallyImportService
     
     protected function importFromLegacySys(Document $document)
     {
-        $manager = $this->managerRegistry->getEntityManager('scomdis');
+        $manager = $this->managerRegistry->getManager('scomdis');
         $this->surveillanceRepository = $manager->getRepository('DIISHSComDisBundle:Surveillance');
         $this->sentinelSiteRepository = $manager->getRepository('DIISHSComDisBundle:SentinelSite');
         $this->clinicRepository = $manager->getRepository('DIISHSComDisBundle:Clinic');

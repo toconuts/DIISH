@@ -11,31 +11,6 @@
 <form action="{{ path('scomdis') }}" method="post">
   {{ form_errors(form) }}
   <fieldset>
-    <legend>BBS</legend>
-      <div class="controls">
-      {{ form_widget(form.message, {'attr': {'class': 'input-xxlarge', 'row': 5, 'placeholder':'Write something...' } }) }}
-    </div>
-    {{ form_rest(form) }}
-    <div class="form-actions">
-      <input class="btn btn-primary" type="submit" value="Post">
-    </div>
-
-    <table class="table table-striped">
-      <tbody>
-      {% for bbs in bbsPagination %}
-        <tr>
-          <th>{{ bbs.username }}</th>
-          <td>{{ bbs.updatedAt|date('d/m/Y H:m:s') }}</td>
-        </tr>
-        <tr>
-          <td colspan="2">{{ bbs.message }}</td>
-        </tr>
-      {% endfor %}
-      </tbody>
-    </table>
-    
-    {{ knp_pagination_render(bbsPagination) }}
-    
     <legend>What's New</legend>
     <table class="table table-striped table-bordered">
       <thead>
@@ -63,7 +38,35 @@
       {% endfor %}
       </tbody>
     </table>
+    
     {{ knp_pagination_render(logPagination) }}
+    
+    <legend>BBS</legend>
+      <div class="controls">
+      {{ form_widget(form.message, {'attr': {'class': 'input-xxlarge', 'row': 5, 'placeholder':'Write something...' } }) }}
+    </div>
+    {{ form_rest(form) }}
+    <div class="form-actions">
+      <input class="btn btn-primary" type="submit" value="Post">
+    </div>
+
+    <table class="table table-striped">
+      <tbody>
+      {% for bbs in bbsPagination %}
+        <tr>
+          <th>{{ bbs.username }}</th>
+          <td>{{ bbs.updatedAt|date('d/m/Y H:m:s') }}</td>
+        </tr>
+        <tr>
+          <td colspan="2">{{ bbs.message }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    
+    {{ knp_pagination_render(bbsPagination) }}
+    
+    
   </fieldset>
 </form>
 {% endblock %}

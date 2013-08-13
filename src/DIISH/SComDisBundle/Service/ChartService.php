@@ -75,7 +75,7 @@ class ChartService
     
     protected function setSyndromes(LineChart $lineChart, $ids)
     {
-        $manager = $this->managerRegistry->getEntityManager('scomdis');
+        $manager = $this->managerRegistry->getManager('scomdis');
         $repository = $manager->getRepository('DIISHSComDisBundle:Syndrome4Surveillance');
         
         foreach($ids as $id) {
@@ -85,7 +85,7 @@ class ChartService
     
     protected function setSentinelSites(LineChart $lineChart, $ids)
     {
-        $manager = $this->managerRegistry->getEntityManager('scomdis');
+        $manager = $this->managerRegistry->getManager('scomdis');
         $repository = $manager->getRepository('DIISHSComDisBundle:SentinelSite');
         
         foreach($ids as $id) {
@@ -120,7 +120,7 @@ class ChartService
     
     protected function getTrendChartData(SurveillanceTrendCriteria $criteria, $initialValue = 0)
     {
-        $manager = $this->managerRegistry->getEntityManager('scomdis');
+        $manager = $this->managerRegistry->getManager('scomdis');
         $surveillances = $manager->getRepository('DIISHSComDisBundle:Surveillance')
                 ->findAllByYearAndSentinelSite(
                         $criteria->getYearChoices(),
