@@ -61,7 +61,7 @@ class ChartService
         ini_set("memory_limit", "1G");
         
         $lineChart = new LineChart($criteria->getTargetYear(), $criteria->getYearChoices(), $criteria->isUseNoRecords(), false);
-        $lineChart->setTitle("Epidemic Prediction");
+        $lineChart->setTitle("Epidemic Detection");
         $this->setSyndromes($lineChart, $criteria->getSyndromes());
         $this->setSentinelSites($lineChart, $criteria->getSentinelSites());
         $this->setSeriesNames($lineChart, false);
