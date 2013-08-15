@@ -74,7 +74,7 @@ function initialize() {
       fillOpacity: 0.5,
       map: map,
       center: getClinicLatLng(clinics[clinic].id),
-      radius: clinics[clinic].phase * 300
+      radius: clinics[clinic].phase * 400
     });
 
     var contentString = createContentString(clinic, 'Clinic', clinics[clinic].coefficient, clinics[clinic].phase);
@@ -145,7 +145,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
       </tbody>
     </table>
     <h3>Epidemic Phase</h3>
-    <div id="map-canvas" style="width: 768px; height: 854px"></div>
+    <div id="map-canvas" style="width: 600px; height: 720px"></div>
   </div>
   <br />
   <div class="container">

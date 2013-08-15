@@ -1,12 +1,12 @@
 <div class="sign-in">
   <div class="signin-box">
-    <h2>Sign in</h2>
+    <form action="{{ path("common_security_check") }}" method="post" id="login" class="form-signin-heading">
+      <h2>Please sign in</h2>
     
     {% if error %}
         <div class="error">{{ error.message }}</div>
     {% endif %}
-
-    <form action="{{ path("common_security_check") }}" method="post" id="login" class="form-virtical">
+        
       <div class="control-group">
         <label class="control-lavel" for="username">Username</label>
           <div class="controls">

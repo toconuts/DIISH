@@ -100,10 +100,12 @@ function getClinicLatLng(id)
       path = new google.maps.LatLng(15.62359643, -61.46319875);
       break;
     case 6003:
-      path = new google.maps.LatLng(15.5841567, -61.41141293);
+      //path = new google.maps.LatLng(15.5841567, -61.41141293);
+      path = new google.maps.LatLng(15.579223,-61.420026);
       break;
     case 6004:
-      path = new google.maps.LatLng(15.59270348, -61.38330889);
+      //path = new google.maps.LatLng(15.59270348, -61.38330889);
+      path = new google.maps.LatLng(15.592699,-61.378727);
       break;
     case 6005:
       path = new google.maps.LatLng(15.59982767, -61.39703497);

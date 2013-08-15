@@ -61,37 +61,37 @@ class LoadClinicData extends AbstractFixture implements OrderedFixtureInterface
         /* PORTSMOUTH */
         $portsmouth = $this->createClinic(6001, 'PORTSMOUTH', 'P.01', $this->getReference('PORTSMOUTH'), $this->getReference('DIST_PORTSMOUTH'));
         $clifton = $this->createClinic(6002, 'CLIFTON', 'P.02', $this->getReference('PORTSMOUTH'), $this->getReference('DIST_PORTSMOUTH'));
-        $dosdane = $this->createClinic(6003, "DOS D''ANE", 'P.03', $this->getReference('PORTSMOUTH'), $this->getReference('DIST_PORTSMOUTH'));
-        $ansedemai = $this->createClinic(6004, "ANSE DE MAI", 'P.04', $this->getReference('PORTSMOUTH'), $this->getReference('DIST_PORTSMOUTH'));
-        $thibaud = $this->createClinic(6005, "THIBAUD", 'P.05', $this->getReference('PORTSMOUTH'), $this->getReference('DIST_PORTSMOUTH'));
-        $viellecase = $this->createClinic(6006, "VIELLE CASE", 'P.06', $this->getReference('PORTSMOUTH'), $this->getReference('DIST_PORTSMOUTH'));
-        $penville = $this->createClinic(6007, "PENVILLE", 'P.07', $this->getReference('PORTSMOUTH'), $this->getReference('DIST_PORTSMOUTH'));
-        $dublanc = $this->createClinic(6008, "DUBLANC", 'P.08', $this->getReference('PORTSMOUTH'), $this->getReference('DIST_PORTSMOUTH'));
+        $dosdane = $this->createClinic(6003, 'DOS D\'DOS D', 'P.03', $this->getReference('PORTSMOUTH'), $this->getReference('DIST_PORTSMOUTH'));
+        $ansedemai = $this->createClinic(6004, 'ANSE DE MAI', 'P.04', $this->getReference('PORTSMOUTH'), $this->getReference('DIST_PORTSMOUTH'));
+        $thibaud = $this->createClinic(6005, 'THIBAUD', 'P.05', $this->getReference('PORTSMOUTH'), $this->getReference('DIST_PORTSMOUTH'));
+        $viellecase = $this->createClinic(6006, 'VIELLE CASE', 'P.06', $this->getReference('PORTSMOUTH'), $this->getReference('DIST_PORTSMOUTH'));
+        $penville = $this->createClinic(6007, 'PENVILLE', 'P.07', $this->getReference('PORTSMOUTH'), $this->getReference('DIST_PORTSMOUTH'));
+        $dublanc = $this->createClinic(6008, 'DUBLANC', 'P.08', $this->getReference('PORTSMOUTH'), $this->getReference('DIST_PORTSMOUTH'));
        
         /* ROSEAU */
         /* ROSEAU CENTRAL */
-        $roseau = $this->createClinic(7101, "ROSEAU", 'R.C1', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
+        $roseau = $this->createClinic(7101, 'ROSEAU', 'R.C1', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
         /* ROSEAU NORTH */
-        $goodwill = $this->createClinic(7201, "GOODWILL", 'R.N1', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
-        $fondcole = $this->createClinic(7202, "FONDCOLE", 'R.N2', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
-        $massacre = $this->createClinic(7203, "MASSACRE", 'R.N3', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
-        $cockrane = $this->createClinic(7204, "COCKRANE", 'R.N4', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
-        $mahaut = $this->createClinic(7205, "MAHAUT", 'R.N5', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
-        $campbell = $this->createClinic(7206, "CAMPBELL", 'R.N6', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
-        $Warner = $this->createClinic(7207, "WARNER", 'R.N7', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
+        $goodwill = $this->createClinic(7201, 'GOODWILL', 'R.N1', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
+        $fondcole = $this->createClinic(7202, 'FONDCOLE', 'R.N2', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
+        $massacre = $this->createClinic(7203, 'MASSACRE', 'R.N3', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
+        $cockrane = $this->createClinic(7204, 'COCKRANE', 'R.N4', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
+        $mahaut = $this->createClinic(7205, 'MAHAUT', 'R.N5', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
+        $campbell = $this->createClinic(7206, 'CAMPBELL', 'R.N6', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
+        $Warner = $this->createClinic(7207, 'WARNER', 'R.N7', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
         /* ROSEAU SOUTH */
-        $newtown = $this->createClinic(7301, "NEWTOWN", 'R.S1', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
-        $pointmichel = $this->createClinic(7302, "POINTE MICHEL", 'R.S2', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
-        $soufriere = $this->createClinic(7303, "SOUFRIERE", 'R.S3', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
-        $scottshead = $this->createClinic(7304, "SCOTTS HEAD", 'R.S4', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
+        $newtown = $this->createClinic(7301, 'NEWTOWN', 'R.S1', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
+        $pointmichel = $this->createClinic(7302, 'POINTE MICHEL', 'R.S2', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
+        $soufriere = $this->createClinic(7303, 'SOUFRIERE', 'R.S3', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
+        $scottshead = $this->createClinic(7304, 'SCOTTS HEAD', 'R.S4', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
         /* ROSEAU VALLEY */
-        $bellevuechopin = $this->createClinic(7401, "BELLEVUE CHOPIN", 'R.V1', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
-        $giraudel = $this->createClinic(7402, "GIRAUDEL", 'R.V2', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
-        $eggleston = $this->createClinic(7403, "EGGLESTON", 'R.V3', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
-        $morneprosper = $this->createClinic(7404, "MORNE PROSPER", 'R.V4', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
-        $laudat = $this->createClinic(7405, "LAUDAT", 'R.V5', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
-        $trafalgar = $this->createClinic(7406, "TRAFALGAR", 'R.V6', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
-        $wottonwaven = $this->createClinic(7407, "WOTTON WAVEN", 'R.V7', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
+        $bellevuechopin = $this->createClinic(7401, 'BELLEVUE CHOPIN', 'R.V1', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
+        $giraudel = $this->createClinic(7402, 'GIRAUDEL', 'R.V2', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
+        $eggleston = $this->createClinic(7403, 'EGGLESTON', 'R.V3', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
+        $morneprosper = $this->createClinic(7404, 'MORNE PROSPER', 'R.V4', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
+        $laudat = $this->createClinic(7405, 'LAUDAT', 'R.V5', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
+        $trafalgar = $this->createClinic(7406, 'TRAFALGAR', 'R.V6', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
+        $wottonwaven = $this->createClinic(7407, 'WOTTON WAVEN', 'R.V7', $this->getReference('ROSEAU'), $this->getReference('DIST_ROSEAU'));
         
         /* PMH */
         // A&E@PMH
@@ -101,7 +101,7 @@ class LoadClinicData extends AbstractFixture implements OrderedFixtureInterface
         $winstonward = $this->createClinic(8005, 'WINSTON WARD', '5', $this->getReference('PMH'), $this->getReference('DIST_ROSEAU'));
         
         /* ROSS UNIVERSITY */
-        $dublanc = $this->createClinic(9001, "ROSS UNIVERSITY", 'P.09', $this->getReference('ROSSUNIVERSITY'), $this->getReference('DIST_PORTSMOUTH'));
+        $dublanc = $this->createClinic(9001, 'ROSS UNIVERSITY', 'P.09', $this->getReference('ROSSUNIVERSITY'), $this->getReference('DIST_PORTSMOUTH'));
         
         $this->manager->flush();
         
