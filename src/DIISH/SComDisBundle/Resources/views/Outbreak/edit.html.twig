@@ -9,13 +9,11 @@
 
 {% block content %}
 <form action="{{ path('scomdis_outbreak_edit', {'id': outbreak.id}) }}" method="post" class="form-horizontal">
-{# {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }} #}
   {{ form_errors(form) }}
 
   {% include "DIISHSComDisBundle:Outbreak:_edit_header.html.twig" %}
   {% include "DIISHSComDisBundle:Outbreak:_edit_items.html.twig" %}
 
-  {#<input type="hidden" name="outbreak[_token]" value="{{ form._token.get('value') }}">#}
   {{ form_widget(form._token) }}
   <div class="form-actions">
     <a href=javascript:history:back() class="btn">Cancel</a>

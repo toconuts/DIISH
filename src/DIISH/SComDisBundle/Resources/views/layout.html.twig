@@ -53,7 +53,7 @@
             <li {% if sidebar_menu == 'scomdis_outbreak_new' %}class="active"{% endif %}>
               <a href="{{ path('scomdis_outbreak_new') }}">New</a></li>
             
-            {% if is_granted('ROLE_ADMIN') %}
+            {% if is_granted('ROLE_SCOMDIS_ADMIN') %}
             <li class="nav-header">Maintenance</li>
             <li {% if sidebar_menu == 'scomdis_admin_clinic' %}class="active"{% endif %}>
               <a href="{{ path('scomdis_admin_clinic') }}">Clinic</a></li>

@@ -114,7 +114,10 @@ class SurveillanceItems
      * @Gedmo\Timestampable(on="update")
      */
     private $updatedAt;
-    
+
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->sunday = 0;
@@ -376,6 +379,11 @@ class SurveillanceItems
         return $this->syndrome;
     }
     
+    /**
+     * Get total
+     * 
+     * @return int
+     */
     public function getTotal()
     {
         return $this->sunday

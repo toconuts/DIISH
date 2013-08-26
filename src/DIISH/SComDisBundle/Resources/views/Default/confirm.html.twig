@@ -15,7 +15,9 @@
 <form action="{{ path('scomdis_confirm') }}" method="post">
   <div class="form-actions">
       <a href=javascript:history:back() class="btn">&laquo; Back</a>
+      {% if res == true %}
       <input type="submit" class="btn btn-primary" value="Submit">
+      {% endif %}
   </div>
 </form>
 {% endblock %}

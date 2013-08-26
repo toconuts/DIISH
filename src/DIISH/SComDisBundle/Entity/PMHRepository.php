@@ -13,9 +13,9 @@ use Doctrine\ORM\EntityRepository;
 class PMHRepository extends EntityRepository
 {
     /**
-     * Save.
+     * Save pmh
      * 
-     * @param PMH $mh
+     * @param \DIISH\SComDisBundle\Entity\PMH $mh
      * @throws \InvalidArgumentException 
      */
     public function savePMH(PMH $pmh, $update = false)
@@ -31,6 +31,11 @@ class PMHRepository extends EntityRepository
         $manager->flush();
     }
     
+    /**
+     * Update pmh
+     * @param \DIISH\SComDisBundle\Entity\PMH $pmh
+     * @param type $update
+     */
     public function updatePMH(PMH $pmh, $update = true)
     {
         $this->savePMH($pmh, $update);
@@ -39,7 +44,7 @@ class PMHRepository extends EntityRepository
     /**
      * Check whether pmh already exist or not.
      * 
-     * @param PMH $pmh
+     * @param \DIISH\SComDisBundle\Entity\PMH $pmh
      * @return boolean 
      */
     public function isExist(PMH $pmh, $update = false)

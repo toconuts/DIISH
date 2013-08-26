@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityRepository;
 class LogRepository extends EntityRepository
 {
     /**
-     * Save.
+     * Save message
      * 
      * @param Log $log
      */

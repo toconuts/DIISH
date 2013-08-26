@@ -47,28 +47,57 @@ class Phase
         
     }
 
+    /**
+     * Set id
+     * 
+     * @param int $value
+     */
     public function setId($value) {
         $this->id = $value;
     }
     
+    /**
+     * Get id
+     * 
+     * @return int
+     */
     public function getId() {
         return $this->id;
     }
     
+    /**
+     * Set threshold
+     * 
+     * @param float $value
+     */
     public function setThreshold($value) {
         $this->threshold = $value;
     }
     
+    /**
+     * Get threshold
+     * 
+     * @return float
+     */
     public function getThreshold() {
         return $this->threshold;
     }
     
+    /**
+     * Set color
+     * 
+     * @param string $value
+     */
     public function setColor($value) {
         $this->color = $value;
     }
     
+    /**
+     * Get color
+     * 
+     * @return string
+     */
     public function getColor() {
         return $this->color;
     }
-    
 }

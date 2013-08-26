@@ -20,7 +20,7 @@ class LogService
     private $managerRegistry;
     
     /**
-     * Constructor.
+     * Constructor
      * 
      * @param RegistryInterface $managerRegistry 
      */
@@ -28,7 +28,7 @@ class LogService
     {
         $this->managerRegistry = $managerRegistry;
     }
-        
+
     protected function log($message, $username, $level)
     {
         $manager = $this->managerRegistry->getManager('scomdis');
@@ -38,16 +38,34 @@ class LogService
         $repository->saveMessage($log);
     }
     
+    /**
+     * Output information log
+     * 
+     * @param string $message
+     * @param string $username
+     */
     public function info($message, $username)
     {
         $this->log($message, $username, Log::LOG_LEVEL_INFO);
     }
     
+    /**
+     * Output warning log
+     * 
+     * @param string $message
+     * @param string $username
+     */
     public function warn($message, $username)
     {
         $this->log($message, $username, Log::LOG_LEVEL_WARN);
     }
     
+    /**
+     * Output error log
+     * 
+     * @param string $message
+     * @param string $username
+     */
     public function error($message, $username)
     {
         $this->log($message, $username, Log::LOG_LEVEL_ERROR);

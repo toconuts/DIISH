@@ -33,20 +33,6 @@ class DailyTallyReportService
         $this->managerRegistry = $managerRegistry;
     }
     
-    public function temp()
-    {
-        $manager = $this->managerRegistry->getManager('scomdis');
-        $surveillanceRepository = $manager->getRepository('DIISHSComDisBundle:Surveillance');
-        $this->surveillance = $surveillanceRepository->findOneBy(
-                array('weekend' => $this->weekend),
-                array('clinic' => $this->clinic)
-        );
-        
-        if (!$this->surveillance) {
-            throw new \InvalidArgumentException('No surveillance found.');
-        }
-    }
-        
     /**
      * Output Weekly Report.
      * 
@@ -70,7 +56,8 @@ class DailyTallyReportService
     /**
      * Set cells on the excel sheet.
      * 
-     * @param type $sheet 
+     * @param PHPExcel_Worksheet $sheet
+     * @param \DIISH\SComDisBundle\Entity\Surveillance $surveillance
      */
     protected function setCells($sheet, $surveillance) {
         

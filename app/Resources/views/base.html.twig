@@ -5,7 +5,6 @@
     {% block stylesheets %}
       <link href="{{ asset('bootstrap/css/bootstrap.css') }}" type="text/css" rel="stylesheet" />
       <link href="{{ asset('bootstrap/css/bootstrap-responsive.css') }}" type="text/css" rel="stylesheet" />
-      {#<link href="{{ asset('css/styles.css') }}" type="text/css" rel="stylesheet" />#}
       <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery.ui.all.css" type="text/css" rel="stylesheet" />
     {% endblock %}
     <title>{% block title %}{{ block('page_title') }} - Dominica Integrated Information System for Health{% endblock %}</title>
@@ -71,25 +70,20 @@
           <div class="btn-group pull-right">
             <a class="btn dropdown-toggle" href="#" data-toggle="dropdown">
               <i class="icon-user"></i>
-              {% if app.user.displayname is defined %}
-                {{ app.user.displayname }}
+              {% if app.user.getAttribute('displayname') is defined %}
+                {{ app.user.getAttribute('displayname') }}
               {% else %}
-                {{ app.user ? app.user.username : 'Anonymous' }}
+                {{ app.user.username }}
               {% endif %}
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
               <li>
-                <a href="{{ path('common_profile_show') }}">View Profile</a>
+                <a href="{{ path('common_userprofile_show') }}">View Profile</a>
               </li>
-              {% if is_granted('ROLE_ADMIN') %}
-              <li>
-                <a href="{{ path('admin') }}">Go to Admin Site</a>
-              </li>
-              {% endif %}
               <li class="divider"></li>
               <li>
-                <a href="{{ path('common_logout') }}">Sign Out</a>
+                <a href="{{ path('logout') }}">Sign Out</a>
               </li>
             </ul>
           </div>

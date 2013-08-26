@@ -40,6 +40,9 @@ class SentinelSite
      */
     private $clinics;
     
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->clinics = new ArrayCollection();

@@ -32,7 +32,9 @@ class OutbreakType extends AbstractType
         $builder->add('sentinelSite');
         $builder->add('clinic');
         $builder->add('syndrome');
-        $builder->add('reportedBy');
+        $builder->add('reportedBy', 'text', array(
+                'read_only' => true
+        ));
         $builder->add('reportedAt', 'date', array(
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
@@ -44,6 +46,9 @@ class OutbreakType extends AbstractType
         ));
     }
     
+    /**
+     * @inheritDoc
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(

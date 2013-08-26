@@ -56,36 +56,68 @@ class BBS
      */
     private $updatedAt;
     
+    /**
+     * Constructor
+     */
     public function __construct()
     {
 
     }
 
+    /**
+     * Set Id
+     * 
+     * @param int $value
+     */
     public function setId($value)
     {
         $this->id = $value;
     }
     
+    /**
+     * Get Id
+     * 
+     * @return int
+     */
     public function getId()
     {
         return $this->id;
     }
     
+    /**
+     * Set message
+     * 
+     * @param string $value
+     */
     public function setMessage($value)
     {
         $this->message = $value;
     }
     
+    /**
+     * Get message
+     * 
+     * @return string
+     */
     public function getMessage()
     {
         return $this->message;
     }
 
+    /**
+     * Set username
+     * 
+     * @param string $value
+     */
     public function setUsername($value)
     {
         $this->username = $value;
     }
     
+    /**
+     * Get username
+     * @return string
+     */
     public function getUsername()
     {
         return $this->username;

@@ -46,19 +46,20 @@ class Document
     private $path;
     
     /**
-     * @var type File
+     * @var File $file
      * 
      * @Assert\File(maxSize="6000000")
      */
     private $file;
     
     /**
-     * @var User $userId
-     * 
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     * @var string $username
+     *
+     * @ORM\Column(name="username", type="string", length=100)
+     * @Assert\NotBlank
+     * @Assert\Length(max = 100)
      */
-    private $user;
+    private $username;
         
     /**
      * @var datetime $createdAt
@@ -198,7 +199,7 @@ class Document
     /**
      * Set file
      * 
-     * @param type $file 
+     * @param File $file 
      */
     public function setFile($file)
     {
@@ -215,7 +216,7 @@ class Document
     /**
      * Get file
      * 
-     * @return type $file
+     * @return File $file
      */
     public function getFile()
     {
@@ -223,23 +224,23 @@ class Document
     }
     
     /**
-     * Set User ID
+     * Set Username
      * 
-     * @param User $user
+     * @param string $username
      */
-    public function setUser($user)
+    public function setUsername($username)
     {
-        $this->user = $user;
+        $this->username = $username;
     }
     
     /**
-     * Get User ID
+     * Get Username
      * 
-     * @return User $user
+     * @return string $username
      */
-    public function getUser()
+    public function getUsername()
     {
-        return $this->user;
+        return $this->username;
     }
         
     /**
@@ -285,21 +286,41 @@ class Document
         }
     }
 
+    /**
+     * Get Absolute Path
+     * 
+     * @return string
+     */
     public function getAbsolutePath()
     {
         return null === $this->path ? null : $this->getUploadRootDir().'/'.$this->path;
     }
     
+    /**
+     * Get Web root path
+     * 
+     * @return string
+     */
     public function getWebPath()
     {
         return null === $this->path ? null : $this->getUploadDir().'/'.$this->path;
     }
     
+    /**
+     * Get upload root directory
+     * 
+     * @return string
+     */
     protected function getUploadRootDir()
     {
         return __DIR__.'/../../../../web/'.$this->getUploadDir();
     }
     
+    /**
+     * Get upload directory
+     * 
+     * @return string
+     */
     protected function getUploadDir()
     {
         return 'uploads/documents';

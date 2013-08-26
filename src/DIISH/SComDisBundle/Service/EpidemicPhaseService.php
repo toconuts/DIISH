@@ -29,7 +29,7 @@ class EpidemicPhaseService
     private $managerRegistry;
     
     /**
-     * Constructor.
+     * Constructor
      * 
      * @param RegistryInterface $managerRegistry 
      */
@@ -38,12 +38,24 @@ class EpidemicPhaseService
         $this->managerRegistry = $managerRegistry;
     }
     
+    /**
+     * Create seasonal coefficient
+     * 
+     * @param \DIISH\SComDisBundle\Entity\SurveillanceCoefficientCriteria $criteria
+     * @return \DIISH\SComDisBundle\Entity\EpidemicPhase
+     */
     public function createSeasonalCoefficient(SurveillanceCoefficientCriteria $criteria)
     {
         $criteria->setWeekOfYear(0);
         return $this->createEpidemicPhaseObject($criteria);
     }
 
+    /**
+     * Create EpidemicPhase
+     * 
+     * @param \DIISH\SComDisBundle\Entity\SurveillanceCoefficientCriteria $criteria
+     * @return \DIISH\SComDisBundle\Entity\EpidemicPhase
+     */
     public function createEpidemicPhase(SurveillanceCoefficientCriteria $criteria)
     {
         $criteria->setModeSpecificWeek(true);
@@ -51,6 +63,12 @@ class EpidemicPhaseService
         return $this->createEpidemicPhaseObject($criteria);
     }
     
+    /**
+     * Create EpidemicPhaseObject
+     * 
+     * @param \DIISH\SComDisBundle\Entity\SurveillanceCoefficientCriteria $criteria
+     * @return \DIISH\SComDisBundle\Entity\EpidemicPhase
+     */
     public function createEpidemicPhaseObject(SurveillanceCoefficientCriteria $criteria)
     {
         set_time_limit(600);

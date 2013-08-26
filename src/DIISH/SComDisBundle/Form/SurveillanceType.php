@@ -31,7 +31,9 @@ class SurveillanceType extends AbstractType
         ));
         $builder->add('sentinelSite');
         $builder->add('clinic');
-        $builder->add('reportedBy');
+        $builder->add('reportedBy', 'text', array(
+                'read_only' => true
+        ));
         $builder->add('reportedAt', 'date', array(
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
@@ -43,6 +45,9 @@ class SurveillanceType extends AbstractType
         ));
     }
     
+    /**
+     * @inheritDoc
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
@@ -51,7 +56,6 @@ class SurveillanceType extends AbstractType
             'csrf_field_name' => '_token',
         ));
     }
-
 
     /**
      * @inheritDoc

@@ -32,16 +32,16 @@ class Log
     /**
      * @var string $message
      * 
-     * @ORM\Column(name="message", type="string", length=50, nullable=false)
-     * @Assert\Length(max = 140)
+     * @ORM\Column(name="message", type="string", length=256, nullable=false)
+     * @Assert\Length(max = 256)
      */
     private $message;
     
     /**
      * @var string $userName
      * 
-     * @ORM\Column(name="username", type="string", length=50, nullable=false)
-     * @Assert\Length(max = 50)
+     * @ORM\Column(name="username", type="string", length=100, nullable=false)
+     * @Assert\Length(max = 100)
      */
     private $username;
     
@@ -68,6 +68,13 @@ class Log
      */
     private $updatedAt;
     
+    /**
+     * Constructor
+     * 
+     * @param string $message
+     * @param string $username
+     * @param int $level
+     */
     public function __construct($message, $username, $level)
     {
         $this->message = $message;
@@ -75,41 +82,78 @@ class Log
         $this->level = $level;
     }
 
+    /**
+     * Set id
+     * 
+     * @param int $value
+     */
     public function setId($value)
     {
         $this->id = $value;
     }
     
+    /**
+     * Get id
+     * 
+     * @return int
+     */
     public function getId()
     {
         return $this->id;
     }
     
+    /**
+     * Set message
+     * 
+     * @param string $value
+     */
     public function setMessage($value)
     {
         $this->message = $value;
     }
     
+    /**
+     * Get message
+     * @return string
+     */
     public function getMessage()
     {
         return $this->message;
     }
 
+    /**
+     * Set username
+     * 
+     * @param string $value
+     */
     public function setUsername($value)
     {
         $this->username = $value;
     }
     
+    /**
+     * Get username
+     * 
+     * @return string
+     */
     public function getUsername()
     {
         return $this->username;
     }
     
+    /**
+     * set log level
+     * @param int $value
+     */
     public function setLevel($value)
     {
         $this->level = $value;
     }
     
+    /**
+     * Get log level
+     * @return int
+     */
     public function getLevel()
     {
         return $this->level;

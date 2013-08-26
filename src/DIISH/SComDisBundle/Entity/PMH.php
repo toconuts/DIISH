@@ -43,18 +43,34 @@ class PMH
         
     }
 
+    /**
+     * Set id
+     * @param int $value
+     */
     public function setId($value) {
         $this->id = $value;
     }
     
+    /**
+     * Get id
+     * @return int
+     */
     public function getId() {
         return $this->id;
     }
     
+    /**
+     * Set clinic
+     * @param Clinic $value
+     */
     public function setClinic($value) {
         $this->clinic = $value;
     }
     
+    /**
+     * Get clinic
+     * @return Clinic
+     */
     public function getClinic() {
         return $this->clinic;
     }

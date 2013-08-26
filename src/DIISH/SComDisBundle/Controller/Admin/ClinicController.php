@@ -3,6 +3,7 @@
 namespace DIISH\SComDisBundle\Controller\Admin;
 
 use Symfony\Component\HttpFoundation\Request;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -69,12 +70,12 @@ class ClinicController extends AdminAppController
             'action' => $this->generateUrl('scomdis_admin_clinic_register'),
             'method' => 'POST',
         ));
-        
-        if ('POST' === $request->getMethod()) {
+
+       if ($request->isMethod('POST')) {
             $data = $request->request->get($form->getName());
-            $form->bind($data);
+            $form->submit($data);
+            
             if ($form->isValid()) {
-                
                 $manager = $this->getDoctrine()->getManager('scomdis');
                 $repo = $manager->getRepository('DIISHSComDisBundle:Clinic');
                 if (!$repo->isExist($clinic)) {
@@ -102,7 +103,7 @@ class ClinicController extends AdminAppController
             return $this->redirect($this->generateUrl('scomdis_admin_clinic_registration'));
         }
 
-        if ('POST' === $request->getMethod()) {
+        if ($request->isMethod('POST')) {
             
             try {
 
@@ -117,7 +118,7 @@ class ClinicController extends AdminAppController
                 
                 return $this->redirect($this->generateUrl('scomdis_admin_clinic'));
                 
-            } catch (\InvalidArgumentException $e) {
+            } catch (\Exception $e) {
                 $request->getSession()->getFlashBag()->add('error', $e->getMessage());
                 return $this->redirect($this->generateUrl('scomdis_admin_clinic_register'));
             }
@@ -145,24 +146,23 @@ class ClinicController extends AdminAppController
             'action' => $this->generateUrl('scomdis_admin_clinic_edit', array('id' => $id)),
             'method' => 'POST',
         ));
-        if ('POST' === $request->getMethod()) {
-            $data = $request->request->get($form->getName());
-            $form->bind($data);
-            if ($form->isValid()) {                
-                try {
-                    
-                    $manager = $this->get('doctrine')->getManager('scomdis');
-                    $repo = $manager->getRepository('DIISHSComDisBundle:Clinic');
-                    $repo->updateClinic($clinic);
 
-                    $session = $request->getSession();
-                    $session->remove('scomdis_admin_clinic/registration');
-                    
-                    return $this->redirect($this->generateUrl('scomdis_admin_clinic_update', array('id' => $clinic->getId())));
+        $form->handleRequest($request);
 
-                } catch (\InvalidArgumentException $e) {
-                    $request->getSession()->getFlashBag()->add('error', $e->getMessage());
-                }
+        if ($form->isValid()) {            
+            try {
+
+                $manager = $this->get('doctrine')->getManager('scomdis');
+                $repo = $manager->getRepository('DIISHSComDisBundle:Clinic');
+                $repo->updateClinic($clinic);
+
+                $session = $request->getSession();
+                $session->remove('scomdis_admin_clinic/registration');
+
+                return $this->redirect($this->generateUrl('scomdis_admin_clinic_update', array('id' => $clinic->getId())));
+
+            } catch (\Exception $e) {
+                $request->getSession()->getFlashBag()->add('error', $e->getMessage());
             }
         }
 
@@ -222,8 +222,9 @@ class ClinicController extends AdminAppController
     }
     
     /**
-     * Restore User data
-     * @param User $user
+     * Restore Clinic data
+     * 
+     * @param Clinic $clinic
      * @param array $formKeys
      * @return boolean
      * @throws \InvalidArgumentException 

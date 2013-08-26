@@ -13,9 +13,9 @@ use Doctrine\ORM\EntityRepository;
 class SentinelSiteRepository extends EntityRepository
 {
     /**
-     * Save.
+     * Save sentinel site
      * 
-     * @param SentinelSite $sentinelSite
+     * @param \DIISH\SComDisBundle\Entity\SentinelSite $sentinelSite
      * @throws \InvalidArgumentException 
      */
     public function saveSentinelSite(SentinelSite $sentinelSite, $update = false)
@@ -29,13 +29,19 @@ class SentinelSiteRepository extends EntityRepository
         $manager->flush();
     }
     
+    /**
+     * update sentinel site
+     * 
+     * @param \DIISH\SComDisBundle\Entity\SentinelSite $sentinelSite
+     * @param bool $update
+     */
     public function updateSentinelSite(SentinelSite $sentinelSite, $update = true)
     {
         $this->saveSentinelSite($sentinelSite, $update);
     }
     
     /**
-     * Check whether sentinel site already exist or not.
+     * Check whether sentinel site already exist or not
      * 
      * @param SentinelSite $sentinelSite
      * @return boolean 
@@ -61,7 +67,7 @@ class SentinelSiteRepository extends EntityRepository
     }
     
     /**
-     * Delete SentinelSite.
+     * Delete sentinel site
      * 
      * @param int $id
      * @throws \InvalidArgumentException 

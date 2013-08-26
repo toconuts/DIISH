@@ -30,23 +30,20 @@ class MapController extends AppController
         $criteria = new SurveillanceCoefficientCriteria($syndromes);
         $form = $this->createForm(new SurveillanceCoefficientCriteriaType(), $criteria);
         
-        if ($request->getMethod() === 'POST') {
-            $data = $request->request->get($form->getName());
-            $form->bind($data);
-            if ($form->isValid()) {
-                
-                // Get epidemic phase object from service.
-                $service = $this->get('surveillance.epidemic_phase_service');
-                $epidemicPhase = $service->createEpidemicPhase($criteria);
-                $messages = $epidemicPhase->getMessages();
-                if (count($messages) > 0) {
-                    $request->getSession()->getFlashBag()->add('warn', "Warnings: " . implode(', ', $messages));
-                }
-                
-                return $this->render('DIISHSComDisBundle:Map:map_epidemic_phase.html.twig', array(
-                    'epidemicPhase' => $epidemicPhase,
-                ));
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+
+            // Get epidemic phase object from service.
+            $service = $this->get('surveillance.epidemic_phase_service');
+            $epidemicPhase = $service->createEpidemicPhase($criteria);
+            $messages = $epidemicPhase->getMessages();
+            if (count($messages) > 0) {
+                $request->getSession()->getFlashBag()->add('warn', "Warnings: " . implode(', ', $messages));
             }
+
+            return $this->render('DIISHSComDisBundle:Map:map_epidemic_phase.html.twig', array(
+                'epidemicPhase' => $epidemicPhase,
+            ));
         }
         
         return array(

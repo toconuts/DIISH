@@ -35,6 +35,9 @@ class SurveillanceItemsType extends AbstractType
         ));
     }
 
+    /**
+     * @inheritDoc
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(

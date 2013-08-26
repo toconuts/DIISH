@@ -13,19 +13,16 @@ use Doctrine\ORM\EntityRepository;
 class OutbreakRepository extends EntityRepository
 {
     /**
-     * Save.
+     * Save outbreak
      * 
      * @param Outbreak $outbreak
      * @throws \InvalidArgumentException 
      */
     public function saveOutbreak(Outbreak $outbreak)
     {   
+        $this->isExist_EX($outbreak);
+        
         $manager = $this->getEntityManager();
-        
-        if ($this->isExist($outbreak)) {
-            throw new \InvalidArgumentException('Error: Duplicated outbreak.');
-        }
-        
         $manager->persist($outbreak);
         
         foreach ($outbreak->outbreakItems as $item ) {
@@ -37,7 +34,7 @@ class OutbreakRepository extends EntityRepository
     }
     
     /**
-     * Check whether outbreak already exist or not.
+     * Check whether the outbreak already exists or not
      * 
      * @param Outbreak $outbreak
      * @return boolean 
@@ -63,7 +60,22 @@ class OutbreakRepository extends EntityRepository
     }
     
     /**
-     * Delete outbreak.
+     * Check whether the outbreak already exists or not
+     * 
+     * @param Outbreak $outbreak
+     * @throws \InvalidArgumentException
+     */
+    public function isExist_EX(Outbreak $outbreak)
+    {
+        if ($this->isExist($outbreak)) {
+            $message = 'Error: This outbreak is already exist. '.
+                            $outbreak->getUniqueTitle();
+            throw new \InvalidArgumentException($message);
+        }
+    }
+    
+    /**
+     * Delete outbreak
      * 
      * @param Outbreak $outbreak
      * @throws \InvalidArgumentException 

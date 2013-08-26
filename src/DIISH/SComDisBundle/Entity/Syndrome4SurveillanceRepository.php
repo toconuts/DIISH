@@ -13,9 +13,10 @@ use Doctrine\ORM\EntityRepository;
 class Syndrome4SurveillanceRepository extends EntityRepository
 {
     /**
-     * Save.
+     * Save syndrome$surveillance
      * 
-     * @param Syndrome4Surveillance $syndrome
+     * @param \DIISH\SComDisBundle\Entity\Syndrome4Surveillance $syndrome
+     * @param bool $update
      * @throws \InvalidArgumentException 
      */
     public function saveSyndrome(Syndrome4Surveillance $syndrome, $update = false)
@@ -24,20 +25,24 @@ class Syndrome4SurveillanceRepository extends EntityRepository
             throw new \InvalidArgumentException('Error: Duplicated Syndrome ID.');
         }
         
-        
-        
         $manager = $this->getEntityManager();
         $manager->persist($syndrome);
         $manager->flush();
     }
-    
+
+    /**
+     * Update syndrome4surveillance
+     * 
+     * @param \DIISH\SComDisBundle\Entity\Syndrome4Surveillance $syndrome
+     * @param bool $update
+     */
     public function updateSyndrome(Syndrome4Surveillance $syndrome, $update = true)
     {
         $this->saveSyndrome($syndrome, $update);
     }
     
     /**
-     * Check whether syndrome already exist or not.
+     * Check whether syndrome already exist or not
      * 
      * @param Syndrome $syndrome
      * @return boolean 
@@ -63,7 +68,7 @@ class Syndrome4SurveillanceRepository extends EntityRepository
     }
     
     /**
-     * Check whether display id is available or not.
+     * Check whether display id is available or not
      * 
      * @param type $id 
      */
@@ -81,7 +86,7 @@ class Syndrome4SurveillanceRepository extends EntityRepository
     }
     
     /**
-     * Delete syndrome.
+     * Delete syndrome
      * 
      * @param int $id
      * @throws \InvalidArgumentException 

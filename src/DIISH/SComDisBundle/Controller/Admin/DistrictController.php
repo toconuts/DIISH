@@ -3,6 +3,7 @@
 namespace DIISH\SComDisBundle\Controller\Admin;
 
 use Symfony\Component\HttpFoundation\Request;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -70,9 +71,10 @@ class DistrictController extends AdminAppController
             'method' => 'POST',
         ));
         
-        if ('POST' === $request->getMethod()) {
+        if ($request->isMethod('POST')) {
             $data = $request->request->get($form->getName());
-            $form->bind($data);
+            $form->submit($data);
+            
             if ($form->isValid()) {
                 
                 $manager = $this->getDoctrine()->getManager('scomdis');
@@ -102,7 +104,7 @@ class DistrictController extends AdminAppController
             return $this->redirect($this->generateUrl('scomdis_admin_district_registration'));
         }
 
-        if ('POST' === $request->getMethod()) {
+        if ($request->isMethod('POST')) {
             
             try {
 
@@ -117,7 +119,7 @@ class DistrictController extends AdminAppController
                 
                 return $this->redirect($this->generateUrl('scomdis_admin_district'));
                 
-            } catch (\InvalidArgumentException $e) {
+            } catch (\Exception $e) {
                 $request->getSession()->getFlashBag()->add('error', $e->getMessage());
                 return $this->redirect($this->generateUrl('scomdis_admin_district_register'));
             }
@@ -146,24 +148,22 @@ class DistrictController extends AdminAppController
             'method' => 'POST',
         ));
         
-        if ('POST' === $request->getMethod()) {
-            $data = $request->request->get($form->getName());
-            $form->bind($data);
-            if ($form->isValid()) {                
-                try {
-                    
-                    $manager = $this->getDoctrine()->getManager('scomdis');
-                    $repo = $manager->getRepository('DIISHSComDisBundle:District');
-                    $repo->updateDistrict($district);
+        $form->handleRequest($request);
+        
+        if ($form->isValid()) {                
+            try {
 
-                    $session = $request->getSession();
-                    $session->remove('scomdis_admin_district/registration');
-                    
-                    return $this->redirect($this->generateUrl('scomdis_admin_district_update', array('id' => $district->getId())));
+                $manager = $this->getDoctrine()->getManager('scomdis');
+                $repo = $manager->getRepository('DIISHSComDisBundle:District');
+                $repo->updateDistrict($district);
 
-                } catch (\InvalidArgumentException $e) {
-                    $request->getSession()->getFlashBag()->add('error', $e->getMessage());
-                }
+                $session = $request->getSession();
+                $session->remove('scomdis_admin_district/registration');
+
+                return $this->redirect($this->generateUrl('scomdis_admin_district_update', array('id' => $district->getId())));
+
+            } catch (\Exception $e) {
+                $request->getSession()->getFlashBag()->add('error', $e->getMessage());
             }
         }
 
@@ -223,6 +223,7 @@ class DistrictController extends AdminAppController
     
     /**
      * Restore District data
+     * 
      * @param District $district
      * @param array $formKeys
      * @return boolean

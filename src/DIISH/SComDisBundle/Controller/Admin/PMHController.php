@@ -3,6 +3,7 @@
 namespace DIISH\SComDisBundle\Controller\Admin;
 
 use Symfony\Component\HttpFoundation\Request;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -70,11 +71,11 @@ class PMHController extends AdminAppController
             'method' => 'POST',
         ));
         
-        if ('POST' === $request->getMethod()) {
+        if ($request->isMethod('POST')) {
             $data = $request->request->get($form->getName());
-            $form->bind($data);
-            if ($form->isValid()) {
-                
+            $form->submit($data);
+            
+            if ($form->isValid()) {    
                 $manager = $this->getDoctrine()->getManager('scomdis');
                 $repo = $manager->getRepository('DIISHSComDisBundle:PMH');
                 if ($repo->isExist($pmh)) {
@@ -103,7 +104,7 @@ class PMHController extends AdminAppController
             return $this->redirect($this->generateUrl('scomdis_admin_pmh_registration'));
         }
 
-        if ('POST' === $request->getMethod()) {
+        if ($request->isMethod('POST')) {
             
             try {
 
@@ -118,7 +119,7 @@ class PMHController extends AdminAppController
                 
                 return $this->redirect($this->generateUrl('scomdis_admin_pmh'));
                 
-            } catch (\InvalidArgumentException $e) {
+            } catch (\Exception $e) {
                 $request->getSession()->getFlashBag()->add('error', $e->getMessage());
                 return $this->redirect($this->generateUrl('scomdis_admin_pmh_register'));
             }
@@ -146,29 +147,28 @@ class PMHController extends AdminAppController
             'action' => $this->generateUrl('scomdis_admin_pmh_edit', array('id' => $id)),
             'method' => 'POST',
         ));
-        if ('POST' === $request->getMethod()) {
-            $data = $request->request->get($form->getName());
-            $form->bind($data);
-            if ($form->isValid()) {
-                if ($repo->isExist($pmh, true)) {
-                    $message = $pmh->getClinic()->getName() . " already exists.";
-                    $request->getSession()->getFlashBag()->add('error', $message);
-                } else {
-                    try {
+        
+        $form->handleRequest($request);
+        
+        if ($form->isValid()) {
+            if ($repo->isExist($pmh, true)) {
+                $message = $pmh->getClinic()->getName() . " already exists.";
+                $request->getSession()->getFlashBag()->add('error', $message);
+            } else {
+                try {
 
-                        $manager = $this->getDoctrine()->getManager('scomdis');
-                        $repo = $manager->getRepository('DIISHSComDisBundle:Pmh');
+                    $manager = $this->getDoctrine()->getManager('scomdis');
+                    $repo = $manager->getRepository('DIISHSComDisBundle:Pmh');
 
-                        $repo->updatePMH($pmh);
+                    $repo->updatePMH($pmh);
 
-                        $session = $request->getSession();
-                        $session->remove('scomdis_admin_pmh/registration');
-                        
-                        return $this->redirect($this->generateUrl('scomdis_admin_pmh_update', array('id' => $pmh->getId())));
+                    $session = $request->getSession();
+                    $session->remove('scomdis_admin_pmh/registration');
 
-                    } catch (\Exception $e) {
-                        $request->getSession()->getFlashBag()->add('error', $e->getMessage());
-                    }
+                    return $this->redirect($this->generateUrl('scomdis_admin_pmh_update', array('id' => $pmh->getId())));
+
+                } catch (\Exception $e) {
+                    $request->getSession()->getFlashBag()->add('error', $e->getMessage());
                 }
             }
         }
@@ -229,6 +229,7 @@ class PMHController extends AdminAppController
     
     /**
      * Restore PMH data
+     * 
      * @param PMH $pmh
      * @param array $formKeys
      * @return boolean

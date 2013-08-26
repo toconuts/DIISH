@@ -3,6 +3,7 @@
 namespace DIISH\SComDisBundle\Controller\Admin;
 
 use Symfony\Component\HttpFoundation\Request;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -67,11 +68,11 @@ class SentinelSiteController extends AdminAppController
         $sentinelSite = new SentinelSite();
         $form = $this->createForm(new SentinelSiteRegistrationType(), $sentinelSite);
         
-        if ('POST' === $request->getMethod()) {
+        if ($request->isMethod('POST')) {
             $data = $request->request->get($form->getName());
-            $form->bind($data);
+            $form->submit($data);
+            
             if ($form->isValid()) {
-                
                 $manager = $this->getDoctrine()->getManager('scomdis');
                 $repo = $manager->getRepository('DIISHSComDisBundle:SentinelSite');
                 if (!$repo->isExist($sentinelSite)) {
@@ -99,7 +100,7 @@ class SentinelSiteController extends AdminAppController
             return $this->redirect($this->generateUrl('scomdis_admin_sentinel_site_registration'));
         }
 
-        if ('POST' === $request->getMethod()) {
+        if ($request->isMethod('POST')) {
             
             try {
 
@@ -114,7 +115,7 @@ class SentinelSiteController extends AdminAppController
                 
                 return $this->redirect($this->generateUrl('scomdis_admin_sentinel_site'));
                 
-            } catch (\InvalidArgumentException $e) {
+            } catch (\Exception $e) {
                 $request->getSession()->getFlashBag()->add('error', $e->getMessage());
                 return $this->redirect($this->generateUrl('scomdis_admin_sentinel_site_register'));
             }
@@ -139,24 +140,23 @@ class SentinelSiteController extends AdminAppController
         }
         
         $form = $this->createForm(new SentinelSiteEditType(), $sentinelSite);
-        if ('POST' === $request->getMethod()) {
-            $data = $request->request->get($form->getName());
-            $form->bind($data);
-            if ($form->isValid()) {                
-                try {
-                    
-                    $manager = $this->getDoctrine()->getManager('scomdis');
-                    $repo = $manager->getRepository('DIISHSComDisBundle:SentinelSite');
-                    $repo->updateSentinelSite($sentinelSite);
+        
+        $form->handleRequest($request);
+        
+        if ($form->isValid()) {                
+            try {
 
-                    $session = $request->getSession();
-                    $session->remove('scomdis_admin_sentinel_site/registration');
-                    
-                    return $this->redirect($this->generateUrl('scomdis_admin_sentinel_site_update', array('id' => $sentinelSite->getId())));
+                $manager = $this->getDoctrine()->getManager('scomdis');
+                $repo = $manager->getRepository('DIISHSComDisBundle:SentinelSite');
+                $repo->updateSentinelSite($sentinelSite);
 
-                } catch (\InvalidArgumentException $e) {
-                    $request->getSession()->getFlashBag()->add('error', $e->getMessage());
-                }
+                $session = $request->getSession();
+                $session->remove('scomdis_admin_sentinel_site/registration');
+
+                return $this->redirect($this->generateUrl('scomdis_admin_sentinel_site_update', array('id' => $sentinelSite->getId())));
+
+            } catch (\Exception $e) {
+                $request->getSession()->getFlashBag()->add('error', $e->getMessage());
             }
         }
 
@@ -216,6 +216,7 @@ class SentinelSiteController extends AdminAppController
     
     /**
      * Restore SentinelSite data
+     * 
      * @param SentinelSite $sentinelSite
      * @param array $formKeys
      * @return boolean

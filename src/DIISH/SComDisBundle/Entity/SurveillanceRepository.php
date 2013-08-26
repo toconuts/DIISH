@@ -13,23 +13,20 @@ use Doctrine\ORM\EntityRepository;
 class SurveillanceRepository extends EntityRepository
 {
     /**
-     * Save.
+     * Save surveillance
      * 
      * @param Surveillance $surveillance
      * @throws \InvalidArgumentException 
      */
     public function saveSurveillance(Surveillance $surveillance)
     {   
-        $manager = $this->getEntityManager();
-        
-        if ($this->isExist($surveillance)) {
-            throw new \InvalidArgumentException('Error: Duplicated surveillance.');
-        }
+        $this->isExist_EX($surveillance);
         
         if ("6" !== $surveillance->getWeekend()->format('w')) {
             throw new \InvalidArgumentException('Error: Invalid weekend.');
         }
-        
+
+        $manager = $this->getEntityManager();
         $manager->persist($surveillance);
         
         foreach ($surveillance->surveillanceItems as $item ) {
@@ -41,7 +38,7 @@ class SurveillanceRepository extends EntityRepository
     }
     
     /**
-     * Check whether surveillance already exist or not.
+     * Check whether the surveillance already exists or not.
      * 
      * @param Surveillance $surveillance
      * @return boolean 
@@ -63,6 +60,21 @@ class SurveillanceRepository extends EntityRepository
         }
         
         return false;
+    }
+    
+    /**
+     * Check whether the surveillance already exists or not.
+     * 
+     * @param Surveillance $surveillance
+     * @throws \InvalidArgumentException
+     */
+    public function isExist_EX(Surveillance $surveillance)
+    {
+        if ($this->isExist($surveillance)) {
+            $message = 'Error: This surveillance is already exist. '.
+                            $surveillance->getUniqueTitle();
+            throw new \InvalidArgumentException($message);
+        }
     }
     
     /**
@@ -95,14 +107,14 @@ class SurveillanceRepository extends EntityRepository
      * @param type $user
      * @throws \InvalidArgumentException 
      */
-    public function receiveSurveillance($id, $user)
+    public function receiveSurveillance($id, $displayname)
     {
         $surveillance = $this->find($id);
         if (!$surveillance) {
             throw new \InvalidArgumentException('Error: The surveillance is not found.');
         }
         
-        $surveillance->setReceivedBy($user->getDisplayname());
+        $surveillance->setReceivedBy($displayname);
         $surveillance->setReceivedAt(new \DateTime());
         
         $manager = $this->getEntityManager();
@@ -110,6 +122,13 @@ class SurveillanceRepository extends EntityRepository
         $manager->flush();
     }
     
+    /**
+     * Find all surveillance by year and sentinel site
+     * 
+     * @param array $years
+     * @param array $sentinelSites
+     * @return array
+     */
     public function findAllByYearAndSentinelSite(array $years, array $sentinelSites)
     {
         
@@ -124,6 +143,12 @@ class SurveillanceRepository extends EntityRepository
         return $surveillances;
     }
     
+    /**
+     * Find all surveillance by year
+     * 
+     * @param array $years
+     * @return array
+     */
     public function findAllByYear(array $years)
     {
         
@@ -137,6 +162,13 @@ class SurveillanceRepository extends EntityRepository
         return $surveillances;
     }
     
+    /**
+     * Find all surveillance by specific week
+     * 
+     * @param array $years
+     * @param int $weekOfYear
+     * @return array
+     */
     public function findAllBySpecificWeek(array $years, $weekOfYear)
     {
         $paramYears = $this->getParamYears($years);

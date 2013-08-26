@@ -14,3 +14,8 @@ parameters:
 
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    imag_ldap_client_host:      192.168.118.2
+    imag_ldap_client_port:      389
+    imag_ldap_client_username:  CN=AD Bind,CN=Users,DC=moh,DC=gov,DC=dm
+    imag_ldap_client_password:  Adb1nd.pmh

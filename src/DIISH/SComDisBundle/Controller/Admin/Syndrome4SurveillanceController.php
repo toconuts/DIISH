@@ -3,6 +3,7 @@
 namespace DIISH\SComDisBundle\Controller\Admin;
 
 use Symfony\Component\HttpFoundation\Request;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -70,11 +71,11 @@ class Syndrome4SurveillanceController extends AdminAppController
             'method' => 'POST',
         ));
         
-        if ('POST' === $request->getMethod()) {
+        if ($request->isMethod('POST')) {
             $data = $request->request->get($form->getName());
-            $form->bind($data);
+            $form->submit($data);
+            
             if ($form->isValid()) {
-                
                 $manager = $this->getDoctrine()->getManager('scomdis');
                 $repo = $manager->getRepository('DIISHSComDisBundle:Syndrome4Surveillance');
                 if ($repo->isExist($syndrome)) {
@@ -104,7 +105,7 @@ class Syndrome4SurveillanceController extends AdminAppController
             return $this->redirect($this->generateUrl('scomdis_admin_syndrome4surveillance_registration'));
         }
 
-        if ('POST' === $request->getMethod()) {
+        if ($request->isMethod('POST')) {
             
             try {
 
@@ -119,7 +120,7 @@ class Syndrome4SurveillanceController extends AdminAppController
                 
                 return $this->redirect($this->generateUrl('scomdis_admin_syndrome4surveillance'));
                 
-            } catch (\InvalidArgumentException $e) {
+            } catch (\Exception $e) {
                 $request->getSession()->getFlashBag()->add('error', $e->getMessage());
                 return $this->redirect($this->generateUrl('scomdis_admin_syndrome4surveillance_register'));
             }
@@ -148,28 +149,26 @@ class Syndrome4SurveillanceController extends AdminAppController
             'method' => 'POST',
         ));
         
-        if ('POST' === $request->getMethod()) {
-            $data = $request->request->get($form->getName());
-            $form->bind($data);
-            if ($form->isValid()) {              
-                try {
+        $form->handleRequest($request);
+        
+        if ($form->isValid()) {              
+            try {
 
-                    $manager = $this->getDoctrine()->getManager('scomdis');
-                    $repo = $manager->getRepository('DIISHSComDisBundle:Syndrome4Surveillance');
+                $manager = $this->getDoctrine()->getManager('scomdis');
+                $repo = $manager->getRepository('DIISHSComDisBundle:Syndrome4Surveillance');
 
-                    if ($repo->isAvailableDispID($syndrome)) {
-                        $repo->updateSyndrome($syndrome);
+                if ($repo->isAvailableDispID($syndrome)) {
+                    $repo->updateSyndrome($syndrome);
 
-                        $session = $request->getSession();
-                        $session->remove('scomdis_admin_syndrome4surveillance/registration');
-                        
-                        return $this->redirect($this->generateUrl('scomdis_admin_syndrome4surveillance_update', array('id' => $syndrome->getId())));
-                    } else {
-                        $request->getSession()->getFlashBag()->add('error', "Display ID is already used.");
-                    }
-                } catch (\InvalidArgumentException $e) {
-                    $request->getSession()->getFlashBag()->add('error', $e->getMessage());
+                    $session = $request->getSession();
+                    $session->remove('scomdis_admin_syndrome4surveillance/registration');
+
+                    return $this->redirect($this->generateUrl('scomdis_admin_syndrome4surveillance_update', array('id' => $syndrome->getId())));
+                } else {
+                    $request->getSession()->getFlashBag()->add('error', "Display ID is already used.");
                 }
+            } catch (\Exception $e) {
+                $request->getSession()->getFlashBag()->add('error', $e->getMessage());
             }
         }
 
@@ -229,6 +228,7 @@ class Syndrome4SurveillanceController extends AdminAppController
     
     /**
      * Restore Syndrome4Surveillance data
+     * 
      * @param Syndrome4Surveillance $syndrome
      * @param array $formKeys
      * @return boolean

@@ -24,6 +24,12 @@ class CommonUtils extends CommonUtilsBase
     
     public static $DAYS_IN_A_WEEK = 7;
 
+    /**
+     * Check whether there is 53 week a year or not
+     * 
+     * @param string $year
+     * @return boolean
+     */
     public static function is53EPIWeekInYear($year)
     {
         $lastWednesday = new \DateTime("last wed of December $year");
@@ -39,6 +45,12 @@ class CommonUtils extends CommonUtilsBase
         return false;
     }
     
+    /**
+     * Get number of EPI Week of year
+     * 
+     * @param type $dateTime
+     * @return int
+     */
     public static function getEPIWeekOfYear($dateTime)
     {
         $wednesday = clone $dateTime;
@@ -54,6 +66,12 @@ class CommonUtils extends CommonUtilsBase
         return $numberOfWeek;
     }
     
+    /**
+     * Get EPI year
+     * 
+     * @param type $dateTime
+     * @return int
+     */
     public static function getEPIYear($dateTime)
     {    
         $wednesday = clone $dateTime;
@@ -64,6 +82,14 @@ class CommonUtils extends CommonUtilsBase
         return $year;
     }
     
+    /**
+     * Calc standard deviation
+     * 
+     * @param array $values
+     * @param bool $sample
+     * @param int $precision
+     * @return float
+     */
     public static function staticsStandardDeviation(array $values, $sample = false, $precision = 2)
     {
         $mean = (float)(array_sum($values) / count($values));

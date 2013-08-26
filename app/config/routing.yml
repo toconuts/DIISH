@@ -1,22 +1,16 @@
+homepage:
+    pattern: /
+    defaults: { _controller: DIISHCommonBundle:Default:index }
+
 diishs_com_dis:
     resource: "@DIISHSComDisBundle/Controller/"
     type:     annotation
     prefix:   /
 
-diish_admin:
-    resource: "@DIISHAdminBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-homepage:
-    pattern: /
-    defaults: { _controller: DIISHCommonBundle:Default:index }
-    
 diish_common:
     resource: "@DIISHCommonBundle/Controller/"
     type:     annotation
     prefix:   /
 
-auth:
-    resource: "@DIISHCommonBundle/Controller/SecurityController.php"
-    type:     annotation
+imag_ldap:
+    resource: "@IMAGLdapBundle/Resources/config/routing.yml"

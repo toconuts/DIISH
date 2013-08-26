@@ -124,6 +124,11 @@ class Surveillance
      */
     private $updatedAt;
 
+    /**
+     * Constructor
+     * 
+     * @param array $syndromes
+     */
     public function __construct(array $syndromes = null)
     {
         $this->surveillanceItems = new ArrayCollection();
@@ -143,6 +148,11 @@ class Surveillance
         }
     }
     
+    /**
+     * Create surveillance items
+     * 
+     * @param array $syndromes
+     */
     public function createSurveillanceItems(array $syndromes)
     {
         foreach ($syndromes as $syndrome) {
@@ -152,6 +162,11 @@ class Surveillance
         }
     }
     
+    /**
+     * Set week number
+     * 
+     * @param \DateTime $weekend
+     */
     public function setWeekNumber(\DateTime $weekend) {        
         $this->weekOfYear = CommonUtils::getEPIWeekOfYear($weekend);
         $this->year = CommonUtils::getEPIYear($weekend);
@@ -407,6 +422,12 @@ class Surveillance
         return $this->year;
     }
 
+    /**
+     * Get SurveillanceItem by syndrome.
+     * 
+     * @param int $id
+     * @return SurveillanceItems
+     */
     public function getSurveillanceItemBySyndrome($id) {
         foreach ($this->surveillanceItems as $item) {
             if ($item->getSyndrome()->getId() === (int)$id)
@@ -414,5 +435,17 @@ class Surveillance
         }
         
         return null;
+    }
+    
+    /**
+     * Get unique title
+     * 
+     * @return string
+     */
+    public function getUniqueTitle() {
+        return $this->getYear().'-'.
+               $this->getWeekOfYear().' '.
+               $this->getClinic().'@'.
+               $this->getSentinelSite();
     }
 }

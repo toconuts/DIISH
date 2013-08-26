@@ -3,11 +3,6 @@
 namespace DIISH\SComDisBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Security\Core\SecurityContext;
-use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 
 use DIISH\SComDisBundle\Entity\Log;
 
@@ -35,20 +30,22 @@ abstract class AppController extends Controller
 
     public function log($message, $level)
     {
-        $securityContext = $this->get('security.context');
-        $user = $securityContext->getToken()->getUser();
+        $user = $this->get('security.context')->getToken()->getUser();
+        $displayname = (method_exists($user, 'getAttribute')) ? 
+            $displayname = $user->getAttribute('displayname') :
+            $displayname = $user->getUsername();
         
         $service = $this->get('log_service');
         
         switch ($level) {
             case Log::LOG_LEVEL_INFO :
-                $service->info($message, $user->getDisplayname());
+                $service->info($message, $displayname);
                 break;
             case Log::LOG_LEVEL_WARN :
-                $service->warn($message, $user->getDisplayname());
+                $service->warn($message, $displayname);
                 break;
             case Log::LOG_LEVEL_ERROR :
-                $service->error($message, $user->getDisplayname());
+                $service->error($message, $displayname);
                 break;
         }
     }

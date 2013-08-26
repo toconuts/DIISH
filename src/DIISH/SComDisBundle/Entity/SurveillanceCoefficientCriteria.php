@@ -57,8 +57,16 @@ class SurveillanceCoefficientCriteria
      */
     private $showIslandwide;
     
+    /**
+     * @var bool $modeSpecificWeek;
+     */
     private $modeSpecificWeek;
 
+    /**
+     * Constructor
+     * 
+     * @param array $syndromes
+     */
     public function __construct(array $syndromes)
     {
         $this->setYears();
@@ -154,6 +162,9 @@ class SurveillanceCoefficientCriteria
         return $this->year;
     }
 
+    /**
+     * Set years
+     */
     public function setYears() {
         $year = date('Y');
         for ($i = $year; $year >= CommonUtils::$BEGINING_YEAR; $year--){
@@ -161,57 +172,115 @@ class SurveillanceCoefficientCriteria
         }
     }
 
+    /**
+     * Set yearChoices
+     * 
+     * @param array $years
+     */
     public function setYearChoices(array $years) {
         $this->yearChoices = $years;
     }
     
+    /**
+     * Get yearChoices
+     * 
+     * @return array
+     */
     public function getYearChoices() {
         return $this->yearChoices;
     }
     
+    /**
+     * Set syndromes
+     * 
+     * @param array $syndromes
+     */
     public function setSyndromes(array $syndromes) {
         $this->syndromes = $syndromes;
     }
     
+    /**
+     * Get syndromes
+     * 
+     * @return srray
+     */
     public function getSyndromes() {
         return $this->syndromes;
     }
     
+    /**
+     * Set useNoRecords
+     * 
+     * @param bool $value
+     */
     public function setUseNoRecords($value)
     {
         $this->useNoRecords = $value;
     }
     
+    /**
+     * Check whether useNoRecords is true or false
+     * 
+     * @return bool
+     */
     public function isUseNoRecords()
     {
         return $this->useNoRecords;
     }
     
+    /**
+     * Set useLandwideSD
+     * 
+     * @param bool $value
+     */
     public function setUseLandwideSD($value)
     {
         $this->useLandwideSD = $value;
     }
     
+    /**
+     * Check whether useLandwideSD is true or false
+     * @return bool
+     */
     public function isUseLandwideSD()
     {
         return $this->useLandwideSD;
     }
     
+    /**
+     * Set showIslandewide
+     * 
+     * @param bool $value
+     */
     public function setShowIslandwide($value)
     {
         $this->showIslandwide = $value;
     }
     
+    /**
+     * Check showIslandewide is true or false
+     * @return bool
+     */
     public function isShowIslandwide()
     {
         return $this->showIslandwide;
     }
     
+    /**
+     * Set modeSpecificWeek
+     * 
+     * @param true $value
+     */
     public function setModeSpecificWeek($value)
     {
         $this->modeSpecificWeek = $value;
     }
     
+    /**
+     * Check modeSpecificWeek is true or false
+     * 
+     * @return bool
+     */
     public function isModeSpecificWeek()
     {
         return $this->modeSpecificWeek;

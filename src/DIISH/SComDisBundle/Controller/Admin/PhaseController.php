@@ -3,6 +3,7 @@
 namespace DIISH\SComDisBundle\Controller\Admin;
 
 use Symfony\Component\HttpFoundation\Request;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
@@ -70,11 +71,11 @@ class PhaseController extends AdminAppController
             'method' => 'POST',
         ));
         
-        if ('POST' === $request->getMethod()) {
+        if ($request->isMethod('POST')) {
             $data = $request->request->get($form->getName());
-            $form->bind($data);
+            $form->submit($data);
+            
             if ($form->isValid()) {
-                
                 $manager = $this->getDoctrine()->getManager('scomdis');
                 $repo = $manager->getRepository('DIISHSComDisBundle:Phase');
                 if ($repo->isExist($phase)) {
@@ -102,7 +103,7 @@ class PhaseController extends AdminAppController
             return $this->redirect($this->generateUrl('scomdis_admin_phase_registration'));
         }
 
-        if ('POST' === $request->getMethod()) {
+        if ($request->isMethod('POST')) {
             
             try {
 
@@ -117,7 +118,7 @@ class PhaseController extends AdminAppController
                 
                 return $this->redirect($this->generateUrl('scomdis_admin_phase'));
                 
-            } catch (\InvalidArgumentException $e) {
+            } catch (\Exception $e) {
                 $request->getSession()->getFlashBag()->add('error', $e->getMessage());
                 return $this->redirect($this->generateUrl('scomdis_admin_phase_register'));
             }
@@ -145,25 +146,24 @@ class PhaseController extends AdminAppController
             'action' => $this->generateUrl('scomdis_admin_phase_edit', array('id' => $id)),
             'method' => 'POST',
         ));
-        if ('POST' === $request->getMethod()) {
-            $data = $request->request->get($form->getName());
-            $form->bind($data);
-            if ($form->isValid()) {              
-                try {
+        
+        $form->handleRequest($request);
+        
+        if ($form->isValid()) {              
+            try {
 
-                    $manager = $this->getDoctrine()->getManager('scomdis');
-                    $repo = $manager->getRepository('DIISHSComDisBundle:Phase');
+                $manager = $this->getDoctrine()->getManager('scomdis');
+                $repo = $manager->getRepository('DIISHSComDisBundle:Phase');
 
-                    $repo->updatePhase($phase);
+                $repo->updatePhase($phase);
 
-                    $session = $request->getSession();
-                    $session->remove('scomdis_admin_phase/registration');
-                    
-                    return $this->redirect($this->generateUrl('scomdis_admin_phase_update', array('id' => $phase->getId())));
+                $session = $request->getSession();
+                $session->remove('scomdis_admin_phase/registration');
 
-                } catch (\InvalidArgumentException $e) {
-                    $request->getSession()->getFlashBag()->add('error', $e->getMessage());
-                }
+                return $this->redirect($this->generateUrl('scomdis_admin_phase_update', array('id' => $phase->getId())));
+
+            } catch (\Exception $e) {
+                $request->getSession()->getFlashBag()->add('error', $e->getMessage());
             }
         }
 
@@ -224,7 +224,8 @@ class PhaseController extends AdminAppController
     
     /**
      * Restore Phase data
-     * @param phase $phase
+     * 
+     * @param Phase $phase
      * @param array $formKeys
      * @return boolean
      * @throws \InvalidArgumentException 

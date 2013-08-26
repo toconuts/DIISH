@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class SurveillancePredictionCriteria extends SurveillanceTrendCriteria
 {
     /**
-     * @var id $targetYear 
+     * @var string $targetYear 
      */
     private $targetYear;
 
@@ -27,6 +27,12 @@ class SurveillancePredictionCriteria extends SurveillanceTrendCriteria
      */
     private $confidenceCoefficient;
 
+    /**
+     * Constructor
+     * 
+     * @param array $syndromes
+     * @param array $sentinelSites
+     */
     public function __construct(array $syndromes, array $sentinelSites)
     {
         parent::__construct($syndromes, $sentinelSites);
@@ -35,31 +41,61 @@ class SurveillancePredictionCriteria extends SurveillanceTrendCriteria
         $this->confidenceCoefficient = 1.645;
     }
     
+    /**
+     * Set targetYear
+     * 
+     * @param string $value
+     */
     public function setTargetYear($value)
     {
         $this->targetYear = $value;
     }
     
+    /**
+     * Get targetYear
+     * 
+     * @return string
+     */
     public function getTargetYear()
     {
         return $this->targetYear;
     }
 
+    /**
+     * Set useNoRecords
+     * 
+     * @param bool $value
+     */
     public function setUseNoRecords($value)
     {
         $this->useNoRecords = $value;
     }
     
+    /**
+     * Check Whether useNoRecords is true or false
+     * 
+     * @return type
+     */
     public function isUseNoRecords()
     {
         return $this->useNoRecords;
     }
     
+    /**
+     * Set conficenceCoefficient
+     * 
+     * @param float $value
+     */
     public function setConfidenceCoefficient($value)
     {
         $this->confidenceCoefficient = $value;
     }
     
+    /**
+     * Get confidenceCoefficient
+     * 
+     * @return float
+     */
     public function getConfidenceCoefficient()
     {
         return $this->confidenceCoefficient;

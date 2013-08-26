@@ -5,7 +5,6 @@ namespace DIISH\CommonBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Security\Core\SecurityContext;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 
 /**
  * SecurityController.
@@ -21,31 +20,29 @@ class SecurityController extends AppController
      */
     public function loginAction()
     {   
-        if ($this->get('request')->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
-            $error = $this->get('request')->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
-        } else {
-            $error = $this->get('request')->getSession()->get(SecurityContext::AUTHENTICATION_ERROR);
-        }
+        $error = $this->getAuthenticationError();
 
         return array(
             'last_username' => $this->get('request')->getSession()->get(SecurityContext::LAST_USERNAME),
             'error'         => $error,
-        );
+            'token'         => $this->generateToken(),
+        );        
     }
 
-    /**
-     * @Route("/login_check", name="common_security_check")
-     */
-    public function securityCheckAction()
+    private function getAuthenticationError()
     {
-        // The security layer will intercept this request
+        if ($this->get('request')->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
+            return $this->get('request')->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
+        }
+
+        return $this->get('request')->getSession()->get(SecurityContext::AUTHENTICATION_ERROR);
     }
 
-    /**
-     * @Route("/logout", name="common_logout")
-     */
-    public function logoutAction()
+    private function generateToken()
     {
-        // The security layer will intercept this request
+        $token = $this->get('form.csrf_provider')
+                      ->generateCsrfToken('authenticate');
+
+        return $token;
     }
 }

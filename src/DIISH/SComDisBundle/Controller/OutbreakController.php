@@ -34,7 +34,7 @@ class OutbreakController extends AppController
         
         $pagenator = $this->get('knp_paginator');
         $pagination = $pagenator->paginate($query, $request->
-                query->get('page', 1), 2);
+                query->get('page', 1), 100);
       
         return array(
             'pagination' => $pagination,
@@ -47,9 +47,16 @@ class OutbreakController extends AppController
      */
     public function newAction(Request $request)
     {
+        $user = $this->get('security.context')->getToken()->getUser();
+        $displayname = (method_exists($user, 'getAttribute')) ? 
+            $displayname = $user->getAttribute('displayname') :
+            $displayname = $user->getUsername();
+        
         $manager = $this->getDoctrine()->getManager('scomdis');
         
         $outbreak = new Outbreak();
+        $outbreak->setReportedBy($displayname);
+        
         $form = $this->createForm(new OutbreakType(), $outbreak);
         
         $sentinelSiteRepository = $manager->getRepository('DIISHSComDisBundle:SentinelSite');
@@ -60,30 +67,27 @@ class OutbreakController extends AppController
         
         $syndromeRepository = $manager->getRepository('DIISHSComDisBundle:Syndrome4Outbreak');
         $syndromes = $syndromeRepository->findAll();
-        
-        $userRepository = $this->getDoctrine()->getManager('common')->getRepository('DIISHCommonBundle:User');
-        $query = $userRepository->createQueryBuilder('r')->orderBy('r.displayname', 'ASC')->getQuery();
-        $users = $query->getResult();
 
-        if ($request->getMethod() === 'POST') {
+        if ($request->isMethod('POST')) {
             $data = $request->request->get($form->getName());
-            $form->bind($data);
+            $form->submit($data);
             
-            if ($form->isValid()) {                
-                $request->getSession()->set('scomdis_outbreak/new', $data);
-                return $this->redirect($this->generateUrl('scomdis_outbreak_confirm'));
+            if ($form->isValid()) {
+                try {
+                    $outbreakRepository = $manager->getRepository('DIISHSComDisBundle:Outbreak');
+                    $outbreakRepository->isExist_EX($outbreak);
+                    $request->getSession()->set('scomdis_outbreak/new', $data);
+                    return $this->redirect($this->generateUrl('scomdis_outbreak_confirm'));
+                } catch (\Exception $e) {
+                    $request->getSession()->getFlashBag()->add('error', $e->getMessage());
+                }
             }
-        } else if ($request->getSession()->has('scomdis_outbreak/new')) {
-            $data = $request->getSession()->get('scomdis_outbreak/new');
-            $data['_token'] = $form['_token']->getData();
-            $form->bind($data);
         }
         
         return array(
             'sentinelSites' => $sentinelSites,
             'clinics'       => $clinics,
             'syndromes'     => $syndromes,
-            'users'         => $users,
             'form'          => $form->createView(),
         );
     }
@@ -94,17 +98,17 @@ class OutbreakController extends AppController
      */
     public function confirmAction(Request $request)
     {
-        $manager = $this->getDoctrine()->getManager('scomdis');
-        
         $outbreak = new Outbreak();
         
         if (!$this->restoreOutbreakForms($outbreak, array('outbreak',))) {
             return $this->redirect($this->generateUrl('scomdis_outbreak_new'));
         }
-        
+
+        $manager = $this->getDoctrine()->getManager('scomdis');
         $outbreakRepository = $manager->getRepository('DIISHSComDisBundle:Outbreak');
         
-        if ('POST' === $request->getMethod()) {
+        $res = true;
+        if ($request->isMethod('POST')) {
             try {
                 
                 $outbreakRepository->saveOutbreak($outbreak);
@@ -113,26 +117,20 @@ class OutbreakController extends AppController
                 $session = $request->getSession();
                 $session->remove('scomdis_outbreak/new');
                 $message = 'Complete adding the new outbreak. '.
-                            $outbreak->getYear().'-'.
-                            $outbreak->getWeekOfYear().' '.
-                            $outbreak->getClinic().'@'.
-                            $outbreak->getSentinelSite().' '.
-                            $outbreak->getSyndrome();
+                            $outbreak->getUniqueTitle();
                 $request->getSession()->getFlashBag()->add('success', $message);
                 
                 return $this->redirect($this->generateUrl('scomdis_outbreak'));
-            } catch (\InvalidArgumentException $e) {
+                
+            } catch (\Exception $e) {
                 $request->getSession()->getFlashBag()->add('error', $e->getMessage());
-                $this->logError($e->getMessage());
-            }
-        } else {
-            if ($outbreakRepository->isExist($outbreak)) {
-                $request->getSession()->getFlashBag()->add('error', "Warning: This outbreak is already exist.");
+                $res = false;
             }
         }
         
         return array(
             'outbreak' => $outbreak,
+            'res' => $res,
         );
     }
     
@@ -150,11 +148,20 @@ class OutbreakController extends AppController
             throw $this->createNotFoundException('No outbreak daily Tally found for id '.$id);
         }
         
-        $referer = $request->server->get('HTTP_REFERER');
-        $request->getSession()->set('outbreak_edit/before_show_url', $referer);
+        $pre_url = null;
+        $session = $request->getSession();
+        if ($session->has('outbreak_edit/after_update_url')) {
+            $pre_url = $session->get('outbreak_edit/after_update_url');
+            $session->remove('outbreak_edit/after_update_url');
+        } else {
+            $referer = $request->server->get('HTTP_REFERER');
+            $pre_url = $referer;
+            $session->set('outbreak_edit/before_show_url', $referer);
+        }
         
         return array(
-            'outbreak' => $outbreak,
+            'outbreak'  => $outbreak,
+            'pre_url'   => $pre_url,
         );
     }
     
@@ -182,30 +189,26 @@ class OutbreakController extends AppController
         $syndromeRepository = $manager->getRepository('DIISHSComDisBundle:Syndrome4Outbreak');
         $syndromes = $syndromeRepository->findAll();
         
-        $manager = $this->getDoctrine()->getManager('common');
-        $userRepository = $manager->getRepository('DIISHCommonBundle:User');
-        $query = $userRepository->createQueryBuilder('r')->orderBy('r.displayname', 'ASC')->getQuery();
-        $users = $query->getResult();
-        
-        if ($request->getMethod() === 'POST') {
-            $data = $request->request->get($form->getName());
-            $form->bind($data);
-            
-            if ($form->isValid()) {
-                try {
-                    $outbreakRepository->saveOutbreak($outbreak);
-                    $this->logUpdateOutbreak($outbreak);
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            try {
+                $outbreakRepository->saveOutbreak($outbreak);
+                $this->logUpdateOutbreak($outbreak);
                     
-                    $request->getSession()->getFlashBag()->add('success', 'Update complete.');
-                    return $this->redirect(
-                            $this->generateUrl('scomdis_outbreak_update', 
-                                                array('id' => $outbreak->getId()))
-                    );
+                $session = $request->getSession();
+                $session->getFlashBag()->add('success', 'Update complete.');
+                if ($session->has('outbreak_edit/before_show_url')) {
+                    $pre_url = $session->get('outbreak_edit/before_show_url');
+                    $session->remove('outbreak_edit/before_show_url');
+                    $session->set('outbreak_edit/after_update_url', $pre_url);
+                }
+                return $this->redirect(
+                    $this->generateUrl('scomdis_outbreak_show', 
+                    array('id' => $outbreak->getId()))
+                );
 
-                } catch (\InvalidArgumentException $e) {
-                    $request->getSession()->getFlashBag()->add('error', $e->getMessage());
-                    $this->logError($e->getMessage());
-                }   
+            } catch (\Exception $e) {
+                $request->getSession()->getFlashBag()->add('error', $e->getMessage());
             }
         }
         
@@ -214,34 +217,7 @@ class OutbreakController extends AppController
             'sentinelSites' => $sentinelSites,
             'clinics'       => $clinics,
             'syndromes'     => $syndromes,
-            'users'         => $users,
             'form'          => $form->createView(),
-        );
-    }
-    
-    /**
-     * @Route("/{id}/update", name="scomdis_outbreak_update", requirements={"id" = "\d+"})
-     * @Template
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $manager = $this->getDoctrine()->getManager('scomdis');
-        $repo = $manager->getRepository('DIISHSComDisBundle:Outbreak');
-        $outbreak = $repo->find($id);
-        
-        if (!$outbreak) {
-            throw $this->createNotFoundException('No outbreak daily Tally found for id '.$id);
-        }
-        
-        $session = $request->getSession();
-        if ($session->has('outbreak_edit/before_show_url')) {
-            $pre_url = $session->get('outbreak_edit/before_show_url');
-            $session->remove('outbreak_edit/before_show_url');
-        }
-        
-        return array(
-            'outbreak' => $outbreak,
-            'pre_url' => $pre_url,
         );
     }
     
@@ -261,7 +237,7 @@ class OutbreakController extends AppController
             $message = 'Complete deleting the outbreak.';
             $request->getSession()->getFlashBag()->add('success', $message);
             
-        } catch (\InvalidArgumentException $e) {
+        } catch (\Exception $e) {
             $request->getSession()->getFlashBag()->add('error', $e->getMessage());
             $this->logError($e->getMessage());
         }
@@ -298,38 +274,39 @@ class OutbreakController extends AppController
         
         $form['syndrome']->setData($syndromes);
         
-        if ($request->getMethod() === 'POST') {
+        /*if ($request->getMethod() === 'POST') {
             $data = $request->request->get($form->getName());
-            $form->bind($data);
-            
-            if ($form->isValid()) {
-                $weekend = $form['weekend']->getData();
-                $clinic = $form['clinic']->getData();
-                $syndrome = $form['syndrome']->getData();
-                
-                $manager = $this->getDoctrine()->getManager('scomdis');
-                $outbreakRepository = $manager->getRepository('DIISHSComDisBundle:Outbreak');
-                $outbreak = $outbreakRepository->findOneBy(array(
-                    'weekend' => $weekend,
-                    'clinic' => $clinic,
-                    'syndrome' => $syndrome
-                ));
-                
-                if ($outbreak) {
-                    return $this->redirect($this->generateUrl(
-                        'scomdis_outbreak_show', array('id' => $outbreak->getId()))
-                    );
-                } else {
-                    $request->getSession()->getFlashBag()->add('error', "No outbreak found");
-                }
+            $form->bind($data);*/
+        
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $weekend = $form['weekend']->getData();
+            $clinic = $form['clinic']->getData();
+            $syndrome = $form['syndrome']->getData();
+
+            $manager = $this->getDoctrine()->getManager('scomdis');
+            $outbreakRepository = $manager->getRepository('DIISHSComDisBundle:Outbreak');
+            $outbreak = $outbreakRepository->findOneBy(array(
+                'weekend' => $weekend,
+                'clinic' => $clinic,
+                'syndrome' => $syndrome
+            ));
+
+            if ($outbreak) {
+                return $this->redirect($this->generateUrl(
+                    'scomdis_outbreak_show', array('id' => $outbreak->getId()))
+                );
+            } else {
+                $request->getSession()->getFlashBag()->add('error', "No outbreak found");
             }
         }
+        //}
         
         return array(
             'sentinelSites' => $sentinelSites,
             'clinics'       => $clinics,
-            'syndromes'      => $syndromes,
-            'form' => $form->createView(),
+            'syndromes'     => $syndromes,
+            'form'          => $form->createView(),
         );
     }
     
@@ -370,7 +347,6 @@ class OutbreakController extends AppController
                 return false;
             }
         }
-        
         return true;
     }
     

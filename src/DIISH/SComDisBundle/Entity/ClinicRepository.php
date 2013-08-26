@@ -13,9 +13,10 @@ use Doctrine\ORM\EntityRepository;
 class ClinicRepository extends EntityRepository
 {
     /**
-     * Save.
+     * Save
      * 
      * @param Clinic $clinic
+     * @param bool $update
      * @throws \InvalidArgumentException 
      */
     public function saveClinic(Clinic $clinic, $update = false)
@@ -29,6 +30,12 @@ class ClinicRepository extends EntityRepository
         $manager->flush();
     }
     
+    /**
+     * Update Clinic
+     * 
+     * @param \DIISH\SComDisBundle\Entity\Clinic $clinic
+     * @param buul $update
+     */
     public function updateClinic(Clinic $clinic, $update = true)
     {
         $this->saveClinic($clinic, $update);

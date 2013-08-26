@@ -57,10 +57,6 @@
   <label class="control-label">Reported by</label>
   <div class="controls">
     {{ form_errors(form.reportedBy) }}
-    <select id="surveillance_reportedBy" name="surveillance[reportedBy]">
-    {% for user in users %}
-      <option value="{{ user.displayname }}" {% if user.id == app.user.id %}selected{% endif %}>{{ user.displayname }}</option>
-    {% endfor %}
-    </select>
+    {{ form_widget(form.reportedBy) }}
   </div>
 </div>

@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityRepository;
 class PhaseRepository extends EntityRepository
 {
     /**
-     * Save.
+     * Save phase
      * 
      * @param Phase $phase
      * @throws \InvalidArgumentException 
@@ -31,6 +31,12 @@ class PhaseRepository extends EntityRepository
         $manager->flush();
     }
     
+    /**
+     * Update phase
+     * 
+     * @param \DIISH\SComDisBundle\Entity\Phase $phase
+     * @param bool $update
+     */
     public function updatePhase(Phase $phase, $update = true)
     {
         $this->savePhase($phase, $update);
@@ -40,7 +46,7 @@ class PhaseRepository extends EntityRepository
      * Check whether phase already exist or not.
      * 
      * @param Phase $phase
-     * @return boolean 
+     * @return bool
      */
     public function isExist(Phase $phase, $update = false)
     {

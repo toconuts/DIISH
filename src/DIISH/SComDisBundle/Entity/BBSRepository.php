@@ -12,6 +12,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class BBSRepository extends EntityRepository
 {
+    /**
+     * Post message
+     * 
+     * @param \DIISH\SComDisBundle\Entity\BBS $bbs
+     */
     public function postMessage(BBS $bbs)
     {
         $manager = $this->getEntityManager();

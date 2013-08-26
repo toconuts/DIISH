@@ -49,7 +49,6 @@ class Syndrome4Surveillance
         return $this->name;
     }
 
-
     /**
      * Get id
      *

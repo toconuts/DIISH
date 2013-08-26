@@ -38,18 +38,33 @@ class DailyTallyImportService
     private $errorMessage;
     
     /**
-     * @var int 
+     * @var int $importedRecordsNumber
      */
     private $importedRecordsNumber;
     
+    /**
+     * @var \DIISH\SComDisBundle\Entity\SurveillanceRepository $surveillanceRepository
+     */
     private $surveillanceRepository;
     
+    /**
+     * @var \DIISH\SComDisBundle\Entity\SentinelSiteRepository $sentinelSiteRepository
+     */
     private $sentinelSiteRepository;
     
+    /**
+     * @var \DIISH\SComDisBundle\Entity\ClinicRepository $clinicRepository
+     */
     private $clinicRepository;
     
+    /**
+     * @var \DIISH\SComDisBundle\Entity\Syndrome4SurveillanceRepository $syndromeRepository
+     */
     private $syndromeRepository;
     
+    /**
+     * @var array $CNV_TBL_SENTINEL_CODE
+     */
     public static $CNV_TBL_SENTINEL_CODE = array(
         1 => 1,     // MARIGOT
         2 => 2,     // GRAND BAY
@@ -62,6 +77,9 @@ class DailyTallyImportService
                     // 9 is ROSS UNIVERSITY but only exists new system
     );
     
+    /**
+     * @var array $CNV_TBL_CLINIC_CODE
+     */
     public static $CNV_TBL_CLINIC_CODE = array(
         /* MARIGOT */
         'M1' => 1001,
@@ -146,8 +164,14 @@ class DailyTallyImportService
         'P9' => 9001,    // also need to change sentinel code 6 -> 9
     );
     
+    /**
+     * @var int $ROSUNIVERSITY_ID
+     */
     public static $ROSSUNIVERSITY_ID = 9001;
     
+    /**
+     * @var array $CNV_TBL_SYNDROME_OFFSET
+     */
     public static $CNV_TBL_SYNDROME_OFFSET = array(
          1 =>  5,   // Gastroenteritis < 5
          2 => 13,   // Gastroenteritis >= 5

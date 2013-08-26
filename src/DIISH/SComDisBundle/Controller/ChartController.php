@@ -42,19 +42,17 @@ class ChartController extends AppController
             'method' => 'POST',
         ));
         
-        if ($request->getMethod() === 'POST') {
-            $data = $request->request->get($form->getName());
-            $form->bind($data);
-            if ($form->isValid()) {
-                
-                // Get chart data from service
-                $service = $this->get('surveillance.chart_service');
-                $lineChart = $service->createTrendChart($criteria);
+        $form->handleRequest($request);
+        
+        if ($form->isValid()) {
 
-                return $this->render('DIISHSComDisBundle:Chart:chart.html.twig', array(
-                    'lineChart' => $lineChart,
-                ));
-            }
+            // Get chart data from service
+            $service = $this->get('surveillance.chart_service');
+            $lineChart = $service->createTrendChart($criteria);
+
+            return $this->render('DIISHSComDisBundle:Chart:chart.html.twig', array(
+                'lineChart' => $lineChart,
+            ));
         }
         
         return array(
@@ -80,19 +78,17 @@ class ChartController extends AppController
         
         $form = $this->createForm(new SurveillancePredictionCriteriaType(), $criteria);
         
-        if ($request->getMethod() === 'POST') {
-            $data = $request->request->get($form->getName());
-            $form->bind($data);
-            if ($form->isValid()) {
-                
-                // Get chart data from service
-                $service = $this->get('surveillance.chart_service');
-                $lineChart = $service->createPredictionChart($criteria);
+        $form->handleRequest($request);
+        
+        if ($form->isValid()) {
 
-                return $this->render('DIISHSComDisBundle:Chart:chart.html.twig', array(
-                    'lineChart' => $lineChart,
-                ));                
-            }
+            // Get chart data from service
+            $service = $this->get('surveillance.chart_service');
+            $lineChart = $service->createPredictionChart($criteria);
+
+            return $this->render('DIISHSComDisBundle:Chart:chart.html.twig', array(
+                'lineChart' => $lineChart,
+            ));                
         }
         
         return array(
@@ -120,24 +116,22 @@ class ChartController extends AppController
             'method' => 'POST',
         ));
         
-        if ($request->getMethod() === 'POST') {
-            $data = $request->request->get($form->getName());
-            $form->bind($data);
-            if ($form->isValid()) {
+        $form->handleRequest($request);
+        
+        if ($form->isValid()) {
 
-                // Get epidemic phase object from service.
-                $service = $this->get('surveillance.epidemic_phase_service');
-                $epidemicPhase = $service->createSeasonalCoefficient($criteria);
-                $messages = $epidemicPhase->getMessages();
-                if (count($messages) > 0) {
-                    $request->getSession()->getFlashBag()->add('warn', "Warnings: " . implode(', ', $messages));
-                }
-                
-                return $this->render('DIISHSComDisBundle:Chart:seasonalCoefficient.html.twig', array(
-                    'epidemicPhase' => $epidemicPhase,
-                ));
-
+            // Get epidemic phase object from service.
+            $service = $this->get('surveillance.epidemic_phase_service');
+            $epidemicPhase = $service->createSeasonalCoefficient($criteria);
+            $messages = $epidemicPhase->getMessages();
+            if (count($messages) > 0) {
+                $request->getSession()->getFlashBag()->add('warn', "Warnings: " . implode(', ', $messages));
             }
+
+            return $this->render('DIISHSComDisBundle:Chart:seasonalCoefficient.html.twig', array(
+                'epidemicPhase' => $epidemicPhase,
+            ));
+
         }
         
         return array(

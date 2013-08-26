@@ -1,10 +1,10 @@
 <div class="sign-in">
   <div class="signin-box">
-    <form action="{{ path("common_security_check") }}" method="post" id="login" class="form-signin-heading">
+    <form action="{{ path("login_check") }}" method="post" id="login" class="form-signin-heading">
       <h2>Please sign in</h2>
     
     {% if error %}
-        <div class="error">{{ error.message }}</div>
+        <div class="alert alert-error">{{ error.message }}</div>
     {% endif %}
         
       <div class="control-group">
@@ -22,6 +22,8 @@
       </div>
         
       <div class="form-actions">
+        <input type="hidden" name="_target_path" value="/" />
+        <input type="hidden" name="_csrf_token" value="{{ token }}" />
         <input type="submit" class="btn btn-primary" value="Sign in" />
       </div>
     </form>

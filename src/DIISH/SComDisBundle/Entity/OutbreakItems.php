@@ -159,6 +159,10 @@ class OutbreakItems
      */
     private $updatedAt;
     
+    /**
+     * Textual represent of day of the week
+     * @var array
+     */
     public static $textualRepOfDayOfTheWeek = array(
         'Sunday',
         'Monday',
@@ -169,6 +173,9 @@ class OutbreakItems
         'Saturday',
     );
     
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->ageGroup1F = 0;
@@ -257,6 +264,11 @@ class OutbreakItems
         return $this->outbreak;
     }
     
+    /**
+     * Get total
+     * 
+     * @return int
+     */
     public function getTotal()
     {
         return $this->ageGroup1F
@@ -275,6 +287,11 @@ class OutbreakItems
              + $this->ageGroup7M;
     }
     
+    /**
+     * Get textual represent of day of the week
+     * 
+     * @return string
+     */
     public function getDayOfTheWeekString()
     {
         return self::$textualRepOfDayOfTheWeek[$this->dayOfTheWeek];

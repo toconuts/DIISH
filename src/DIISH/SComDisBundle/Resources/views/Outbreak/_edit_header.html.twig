@@ -66,10 +66,7 @@
 <div class="control-group {% if form.reportedBy.vars.errors|length > 0 %}error{% endif %}">
   <label class="control-label">Reported by</label>
   <div class="controls">
-    <select id="outbreak_reportedBy" name="outbreak[reportedBy]">
-    {% for user in users %}
-      <option value="{{ user.displayname }}" {% if user.id == app.user.id %}selected{% endif %}>{{ user.displayname }}</option>
-    {% endfor %}
-    </select>
+    {{ form_errors(form.reportedBy) }}
+    {{ form_widget(form.reportedBy) }}
   </div>
 </div>

@@ -40,6 +40,9 @@ class Clinic
      */
     private $code;
     
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->clinics = new ArrayCollection();

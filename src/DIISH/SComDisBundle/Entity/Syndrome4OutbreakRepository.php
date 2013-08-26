@@ -13,9 +13,10 @@ use Doctrine\ORM\EntityRepository;
 class Syndrome4OutbreakRepository extends EntityRepository
 {
     /**
-     * Save.
+     * Save syndrome4outbreak
      * 
-     * @param Syndrome4Outbreak $syndrome
+     * @param \DIISH\SComDisBundle\Entity\Syndrome4Outbreak $syndrome
+     * @param bool $update
      * @throws \InvalidArgumentException 
      */
     public function saveSyndrome(Syndrome4Outbreak $syndrome, $update = false)
@@ -29,13 +30,19 @@ class Syndrome4OutbreakRepository extends EntityRepository
         $manager->flush();
     }
     
+    /**
+     * Update syndrome4outbreak
+     * 
+     * @param \DIISH\SComDisBundle\Entity\Syndrome4Outbreak $syndrome
+     * @param bool $update
+     */
     public function updateSyndrome(Syndrome4Outbreak $syndrome, $update = true)
     {
         $this->saveSyndrome($syndrome, $update);
     }
     
     /**
-     * Check whether syndrome already exist or not.
+     * Check whether syndrome already exist or not
      * 
      * @param Syndrome $syndrome
      * @return boolean 
@@ -61,7 +68,7 @@ class Syndrome4OutbreakRepository extends EntityRepository
     }
     
     /**
-     * Check whether display id is available or not.
+     * Check whether display id is available or not
      * 
      * @param type $id 
      */
@@ -79,7 +86,7 @@ class Syndrome4OutbreakRepository extends EntityRepository
     }
     
     /**
-     * Delete syndrome.
+     * Delete syndrome
      * 
      * @param int $id
      * @throws \InvalidArgumentException 

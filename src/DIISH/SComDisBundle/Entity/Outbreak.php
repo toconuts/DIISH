@@ -116,6 +116,9 @@ class Outbreak
      */
     private $updatedAt;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->outbreakItems = new ArrayCollection();
@@ -142,6 +145,10 @@ class Outbreak
         }
     }
     
+    /**
+     * Set number of the week
+     * @param \DateTime $weekend
+     */
     public function setWeekNumber(\DateTime $weekend) {
         $this->year = $weekend->format('o');
         $this->weekOfYear = $weekend->format('W');
@@ -375,5 +382,18 @@ class Outbreak
     public function getSyndrome()
     {
         return $this->syndrome;
+    }
+    
+    /**
+     * Get unique title
+     * 
+     * @return string
+     */
+    public function getUniqueTitle() {
+        return  $this->getYear().'-'.
+                $this->getWeekOfYear().' '.
+                $this->getClinic().'@'.
+                $this->getSentinelSite().' '.
+                $this->getSyndrome();
     }
 }

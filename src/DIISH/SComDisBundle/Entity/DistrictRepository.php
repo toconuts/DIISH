@@ -25,6 +25,12 @@ class DistrictRepository extends EntityRepository
         
     }
     
+    /**
+     * Get total population
+     * 
+     * @param array $districts
+     * @return int
+     */
     protected function getTotalPopulation($districts)
     {
         $total = 0;
@@ -34,6 +40,12 @@ class DistrictRepository extends EntityRepository
         return $total;
     }
     
+    /**
+     * Update population ratio
+     * 
+     * @param array $districts
+     * @param int $totalPopulation
+     */
     protected function updatePopulationRatio(&$districts, $totalPopulation)
     {
         foreach ($districts as $district) {
@@ -42,9 +54,10 @@ class DistrictRepository extends EntityRepository
     }
     
     /**
-     * Save.
+     * Save district
      * 
-     * @param District $district
+     * @param \DIISH\SComDisBundle\Entity\District $district
+     * @param bool $update
      * @throws \InvalidArgumentException 
      */
     public function saveDistrict(District $district, $update = false)
@@ -58,6 +71,12 @@ class DistrictRepository extends EntityRepository
         $manager->flush();
     }
     
+    /**
+     * Update district
+     * 
+     * @param \DIISH\SComDisBundle\Entity\District $district
+     * @param bool $update
+     */
     public function updateDistrict(District $district, $update = true)
     {
         $this->saveDistrict($district, $update);
@@ -90,7 +109,7 @@ class DistrictRepository extends EntityRepository
     }
     
     /**
-     * Delete district.
+     * Delete district
      * 
      * @param District $district
      * @throws \InvalidArgumentException 

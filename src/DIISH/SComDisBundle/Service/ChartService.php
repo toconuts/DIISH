@@ -25,10 +25,13 @@ class ChartService
      */
     private $managerRegistry;
     
+    /**
+     * @var int $numberOfRecord
+     */
     private $numberOfRecord;
 
     /**
-     * Constructor.
+     * Constructor
      * 
      * @param RegistryInterface $managerRegistry 
      */
@@ -38,6 +41,12 @@ class ChartService
         $this->numberOfRecord = array();
     }
     
+    /**
+     * Create trend chart
+     * 
+     * @param \DIISH\SComDisBundle\Entity\SurveillanceTrendCriteria $criteria
+     * @return array
+     */
     public function createTrendChart(SurveillanceTrendCriteria $criteria)
     {
         set_time_limit(600);
@@ -55,6 +64,12 @@ class ChartService
         return $lineChart;
     }
     
+    /**
+     * Create prediction chart
+     * 
+     * @param \DIISH\SComDisBundle\Entity\SurveillancePredictionCriteria $criteria
+     * @return array
+     */
     public function createPredictionChart(SurveillancePredictionCriteria $criteria)
     {
         set_time_limit(600);
