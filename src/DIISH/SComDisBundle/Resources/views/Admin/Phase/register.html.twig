@@ -1,0 +1,39 @@
+{% extends 'DIISHSComDisBundle::layout.html.twig' %}
+
+{% block page_title 'Syndromic Surveillance - Phase - SComDis' %}
+{% block product_name 'SComDis' %}
+{% block content_title 'Syndromic Surveillance - Phase - New' %}
+
+{% set menu = 'SComDis' %}
+{% set sidebar_menu = 'scomdis_admin_phase' %}
+
+{% block content %}
+{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+  {{ form_errors(form) }}
+    <div class="control-group {% if form.id.vars.errors|length > 0 %}error{% endif %}">
+      <label class="control-label">ID</label>
+      <div class="controls">
+        {{ form_errors(form.id) }}
+        {{ form_widget(form.id) }}
+      </div>
+    </div>
+    <div class="control-group {% if form.threshold.vars.errors|length > 0 %}error{% endif %}">
+      <label class="control-label">Threshold</label>
+      <div class="controls">
+        {{ form_errors(form.threshold) }}
+        {{ form_widget(form.threshold) }}
+      </div>
+    </div>
+    <div class="control-group {% if form.color.vars.errors|length > 0 %}error{% endif %}">
+      <label class="control-label">Color</label>
+      <div class="controls">
+        {{ form_errors(form.color) }}
+        {{ form_widget(form.color) }}
+      </div>
+    </div>
+    <div class="form-actions">
+      <a href=javascript:history:back() class="btn">&laquo; Cancel</a>
+      <input type="submit" class="btn btn-primary" value="Confirm">
+    </div>
+{{ form_end(form) }}
+{% endblock %}

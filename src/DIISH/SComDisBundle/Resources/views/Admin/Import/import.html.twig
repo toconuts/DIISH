@@ -1,0 +1,22 @@
+{% extends 'DIISHSComDisBundle::layout.html.twig' %}
+
+{% block page_title 'Syndromic Surveillance - Import - SComDis' %}
+{% block product_name 'SComDis' %}
+{% block content_title 'Syndromic Surveillance - Import' %}
+
+{% set menu = 'SComDis' %}
+{% set sidebar_menu = 'scomdis_admin_import' %}
+
+{% block content %}
+{{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+  {{ form_errors(form) }}
+    <label class="control-label">File to import</label>
+    <div class="controls">
+    {{ form_errors(form.attachment) }}
+    {{ form_widget(form.attachment) }}
+    </div>
+    <div class="form-actions">
+      <input class="btn btn-primary" type="submit" value="Import">
+    </div>
+{{ form_end(form) }}
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'DIISHSComDisBundle::layout.html.twig' %}
+
+{% block page_title 'Outbreak - SComDis' %}
+{% block product_name 'SComDis' %}
+{% block content_title 'Outbreak' %}
+
+{% set menu = 'scomdis' %}
+{% set sidebar_menu = 'scomdis_outbreak' %}
+
+{% block content %}
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>Week</th>
+      <th>Year</th>
+      <th>Weekend</th>
+      <th>Sentinel site</th>
+      <th>Clinic / Ward</th>
+      <th>Syndrome</th>
+      <th>Reported at</th>
+      <th>Reported by</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for outbreak in pagination %}
+    <tr>
+      <td><a href="{{ path('scomdis_outbreak_show', {'id': outbreak.id}) }}">{{ outbreak.id }}</a></td>
+      <td>{{ outbreak.weekOfYear }}</td>
+      <td>{{ outbreak.year }}</td>
+      <td>{{ outbreak.weekEnd|date('d/m/Y') }}</td>
+      <td>{{ outbreak.sentinelSite.name }}</td>
+      <td>{{ outbreak.clinic.name }}</td>
+      <td>{{ outbreak.syndrome.name }}</td>
+      <td>{{ outbreak.reportedAt|date('d/m/Y') }}</td>
+      <td>{{ outbreak.reportedBy }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{{ knp_pagination_render(pagination) }}
+
+{% endblock %}

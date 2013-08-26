@@ -1,0 +1,26 @@
+{% extends 'DIISHSComDisBundle::layout.html.twig' %}
+
+{% block page_title 'Syndromic Surveillance - PMH - SComDis' %}
+{% block product_name 'SComDis' %}
+{% block content_title 'Syndromic Surveillance - PMH - Confirmation' %}
+
+{% set menu = 'SComDis' %}
+{% set sidebar_menu = 'scomdis_admin_pmh' %}
+
+{% block content %}
+<table class="table table-striped table-bordered">
+  <tbody>
+    <tr>
+      <th>ID</th>
+      <td>{{ pmh.id }}</td>
+    </tr>
+    <tr>
+      <th>Clinic</th>
+      <td>{{ pmh.clinic }}</td>
+    </tr>
+  </tbody>
+</table>
+<div class="form-actions">
+  <a href="{{ pre_url }}" class="btn">&laquo; Back</a>
+</div>
+{% endblock %}

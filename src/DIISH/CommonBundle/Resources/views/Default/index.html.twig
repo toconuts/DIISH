@@ -1,0 +1,16 @@
+{% extends 'DIISHCommonBundle::layout.html.twig' %}
+
+{% block page_title 'DIISH' %}
+{% block product_name 'DIISH' %}
+{% set menu = 'home' %}
+    
+{% block content %}
+<div class="row">
+  <div class="span8">
+    {% include 'DIISHCommonBundle::productMenu.html.twig' %}
+  </div>
+
+  <div class="span4">
+  </div>
+</div>
+{% endblock %}

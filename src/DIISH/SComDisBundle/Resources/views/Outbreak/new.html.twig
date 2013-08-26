@@ -1,0 +1,24 @@
+{% extends 'DIISHSComDisBundle::layout.html.twig' %}
+
+{% block page_title 'Outbreak - new - SComDis' %}
+{% block product_name 'SComDis' %}
+{% block content_title 'Outbreak - new' %}
+
+{% set menu = 'SComDis' %}
+{% set sidebar_menu = 'scomdis_outbreak_new' %}
+
+{% block content %}
+<form action="{{ path('scomdis_outbreak_new') }}" method="post" class="form-horizontal">
+  {{ form_errors(form) }}
+  
+  {% include "DIISHSComDisBundle:Outbreak:_edit_header.html.twig" %}
+  {% include "DIISHSComDisBundle:Outbreak:_edit_items.html.twig" %}
+
+  {{ form_widget(form._token) }}
+  <div class="form-actions">
+    <input type="submit" class="btn btn-primary" value="Confirm">
+  </div>
+</form>
+{% endblock %}
+
+
