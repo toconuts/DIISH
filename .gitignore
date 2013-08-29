@@ -5,8 +5,9 @@
 /vendor/
 /app/config/parameters.yml
 /nbproject/
-/web/uploads/*
+/web/uploads/
 /web/css/*
 /web/js/*
+/local_settings/*
 *~
-
+!.gitkeep

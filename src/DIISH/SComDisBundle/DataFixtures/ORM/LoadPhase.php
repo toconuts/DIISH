@@ -24,7 +24,7 @@ class LoadPhaseData extends AbstractFixture implements OrderedFixtureInterface
         $this->manager = $manager;
         
         // Phases
-        $this->createPhase(1, -999, '#FFFFFF');
+        $this->createPhase(1, -999, '#FFFFCC');
         $this->createPhase(2, 0.5, 'yellow');
         $this->createPhase(3, 1, '#FF9900');
         $this->createPhase(4, 1.645, '#FF9999');

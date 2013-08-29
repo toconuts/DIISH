@@ -265,6 +265,12 @@ class Document
             return;
         }
         
+        if (!is_dir($this->getUploadRootDir())) {
+            if (!mkdir($this->getUploadRootDir(), 0, true)) {
+                throw new Exception("Error: Cant not make the upload directory.");
+            }
+        }
+
         $this->getFile()->move($this->getUploadRootDir(), $this->path);
         
         if (isset($this->temp)) {
