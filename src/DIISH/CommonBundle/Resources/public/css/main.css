@@ -88,27 +88,45 @@ footer {
 }
 .product1 {
     background-color: darkkhaki;
-    background-image: -moz-linear-gradient(left top , white, darkkhaki);
+    background-image: -webkit-linear-gradient(left top, white, darkkhaki); /* for webkit browsers */
+    background-image: -moz-linear-gradient(left top , white, darkkhaki); /* for firefox 3.6+ */
+    background-image: -o-linear-gradient(left top, white, darkkhaki); /* for Opera 11.10+ */
+    background-image: linear-gradient(to right bottom, white, darkkhaki); /* for IE10+, W3C, Opera 12.50+ */
 }
 .product2 {
     background-color: darkorchid;
-    background-image: -moz-linear-gradient(left top , white, darkorchid);
+    background-image: -webkit-linear-gradient(left top, white, darkorchid); /* for webkit browsers */
+    background-image: -moz-linear-gradient(left top , white, darkorchid); /* for firefox 3.6+ */
+    background-image: -o-linear-gradient(left top, white, darkorchid); /* for Opera 11.10+ */
+    background-image: linear-gradient(to right bottom, white, darkorchid); /* for IE10+, W3C */
 }
 .product3 {
     background-color: olivedrab;
-    background-image: -moz-linear-gradient(left top , white, olivedrab);
+    background-image: -webkit-linear-gradient(left top, white, olivedrab); /* for webkit browsers */
+    background-image: -moz-linear-gradient(left top , white, olivedrab); /* for firefox 3.6+ */
+    background-image: -o-linear-gradient(left top, white, olivedrab); /* for Opera 11.10+ */
+    background-image: linear-gradient(to right bottom, white, olivedrab); /* for IE10+, W3C */
 }
 .product4 {
     background-color: royalblue;
-    background-image: -moz-linear-gradient(left top , white, royalblue);
+    background-image: -webkit-linear-gradient(left top, white, royalblue); /* for webkit browsers */
+    background-image: -moz-linear-gradient(left top , white, royalblue); /* for firefox 3.6+ */
+    background-image: -o-linear-gradient(left top, white, royalblue); /* for Opera 11.10+ */
+    background-image: linear-gradient(to right bottom, white, royalblue); /* for IE10+, W3C */
 }
 .product5 {
     background-color: darkgray;
-    background-image: -moz-linear-gradient(left top , white, darkgray);
+    background-image: -webkit-linear-gradient(left top, white, darkgray); /* for webkit browsers */
+    background-image: -moz-linear-gradient(left top , white, darkgray); /* for firefox 3.6+ */
+    background-image: -o-linear-gradient(left top, white, darkgray); /* for Opera 11.10+ */
+    background-image: linear-gradient(to right bottom, white, darkgray); /* for IE10+, W3C */
 }
 .product6 {
     background-color: goldenrod;
-    background-image: -moz-linear-gradient(left top , white, goldenrod);
+    background-image: -webkit-linear-gradient(left top, white, goldenrod); /* for webkit browsers */
+    background-image: -moz-linear-gradient(left top , white, goldenrod); /* for firefox 3.6+ */
+    background-image: -o-linear-gradient(left top, white, goldenrod); /* for Opera 11.10+ */
+    background-image: linear-gradient(to right bottom, white, goldenrod); /* for IE10+, W3C */
 }
 
 .product-menu h3 {

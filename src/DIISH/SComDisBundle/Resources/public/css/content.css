@@ -7,7 +7,10 @@
 */
 
 .navbar-inner {
-    background: -moz-linear-gradient(center top , #665280 0%, #584064 100%) repeat scroll 0 0 transparent;
+    background: -webkit-linear-gradient(top, #665280 0%, #584064 100%); /* for webkit browsers */
+    background: -moz-linear-gradient(center top , #665280 0%, #584064 100%) repeat scroll 0 0 transparent; /* for firefox 3.6+ */
+    background: -o-linear-gradient(top, #665280 0%, #584064 100%); /* for Opera 11.10+ */
+    background: linear-gradient(to bottom, #665280 0%, #584064 100%); /* for IE10+, W3C */
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
 }
 
