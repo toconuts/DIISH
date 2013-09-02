@@ -55,7 +55,7 @@ imag_ldap:
 #    bind_username_before: true # Optional
 
   user:
-    base_dn: OU=ICT,DC=moh,DC=gov,DC=dm
+    base_dn: OU=MoH,DC=moh,DC=gov,DC=dm
 #    filter: (&(foo=bar)(ObjectClass=Person)) #Optional
     filter: (&(ObjectClass=Person))
     name_attribute: sAMAccountName
