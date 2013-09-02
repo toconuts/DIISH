@@ -38,7 +38,7 @@
             </li>
             <li class="{% if menu == 'openmrs' %}active{% endif %}">
               {% if app.user.username is defined %}
-              <a href="http://192.168.118.84:8080/openmrs">OpenMRS</a>
+              <a href="http://192.168.118.84:8080/openmrs" target="_blank">OpenMRS</a>
               {% else %}
               <p>OpenMRS</p>
               {% endif %}
@@ -52,35 +52,35 @@
             </li>
             <li class="{% if menu == 'ddms' %}active{% endif %}">
               {% if app.user.username is defined %}
-              <a href="http://192.168.118.42:8080/share">DDMS</a>
+              <a href="http://192.168.118.42:8080/share" target="_blank">DDMS</a>
               {% else %}
               <p>DDMS</p>
               {% endif %}
             </li>
             <li class="{% if menu == 'health_res' %}active{% endif %}">
               {% if app.user.username is defined %}
-              <a href="http://192.168.118.57/healthres">HealthRes</a>
+              <a href="http://192.168.118.57/healthres" target="_blank">HealthRes</a>
               {% else %}
               <p>HealthRes</p>
               {% endif %}
             </li>
             <li class="{% if menu == 'public_health_res' %}active{% endif %}">
               {% if app.user.username is defined %}
-              <a href="http://192.168.118.57/publichealthres">Public HealthRes</a>
+              <a href="http://192.168.118.57/publichealthres" target="_blank">Public HealthRes</a>
               {% else %}
               <p>Public HealthRes</p>
               {% endif %}
             </li>
             <li class="{% if menu == 'cmssm' %}active{% endif %}">
               {% if app.user.username is defined %}
-              <a href="http://192.168.118.57/cmssm">CMSSM</a>
+              <a href="http://192.168.118.57/cmssm" target="_blank">CMSSM</a>
               {% else %}
               <p>CMSSM</p>
               {% endif %}
             </li>
             <li class="{% if menu == 'mortality' %}active{% endif %}">
               {% if app.user.username is defined %}
-              <a href="http://192.168.118.46/reports/mortality">Mortality</a>
+              <a href="http://192.168.118.46/reports/mortality" target="_blank">Mortality</a>
               {% else %}
               <p>Mortality</p>
               {% endif %}
