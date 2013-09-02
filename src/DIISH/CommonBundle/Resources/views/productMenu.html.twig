@@ -1,9 +1,11 @@
 <div class="product-menu">
   <h2>Products</h2>
+  {% if not app.user.username is defined %}
   <p>Sign in and start sharing with health information.</p>
+  {% endif %}
   <div class="product1">
-    {% if app.user.username is defined and is_granted('ROLE_OPENMRS_USER') %}
-    <a href="{{ path('scomdis') }}">OpenMRS</a>
+    {% if app.user.username is defined %}
+    <a href="http://192.168.118.84:8080/openmrs">OpenMRS</a>
     {% else %}
     <h3>OpenMRS</h3>
     {% endif %}
@@ -16,23 +18,44 @@
     {% endif %}
   </div>
   <div class="product3">
-    {% if app.user.username is defined and is_granted('ROLE_PM1_USER') %}
-      <a href="#">PM.1</a>
+    {% if app.user.username is defined %}
+      <a href="http://192.168.118.42:8080/share">DDMS</a>
     {% else %}
-      <h3>PM.1</h3>
+      <h3>DDMS</h3>
     {% endif %}
   </div>
   <div class="product4">
-    {% if app.user.username is defined and is_granted('ROLE_EYEBASE_USER') %}
-      <a href="#">EyeBase</a>
+    {% if app.user.username is defined %}
+      <a href="http://192.168.118.57/healthres">HealthRes</a>
     {% else %}
-      <h3>EyeBase</h3>
+      <h3>HealthRes</h3>
     {% endif %}
   </div>
   <div class="product5">
-    <h3>Product5</h3>
+    {% if app.user.username is defined %}
+      <a href="http://192.168.118.57/publichealthres">Public HealthRes</a>
+    {% else %}
+      <h3>Public HealthRes</h3>
+    {% endif %}
   </div>
   <div class="product6">
-    <h3>Product6</h3>
+    {% if app.user.username is defined %}
+      <a href="http://192.168.118.57/cmssm">CMSSM</a>
+    {% else %}
+      <h3>CMSSM</h3>
+    {% endif %}
+  </div>
+  <div class="product7">
+    {% if app.user.username is defined %}
+      <a href="http://192.168.118.46/reports/mortality">Mortality</a>
+    {% else %}
+      <h3>Mortality</h3>
+    {% endif %}
+  </div>
+  <div class="product8">
+      <h3>Product8</h3>
+  </div>
+  <div class="product9">
+      <h3>Product9</h3>
   </div>
 </div>
