@@ -2,18 +2,44 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    {% block stylesheets %}
-      <link href="{{ asset('bootstrap/css/bootstrap.css') }}" type="text/css" rel="stylesheet" />
-      <link href="{{ asset('bootstrap/css/bootstrap-responsive.css') }}" type="text/css" rel="stylesheet" />
-      <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery.ui.all.css" type="text/css" rel="stylesheet" />
-    {% endblock %}
     <title>{% block title %}{{ block('page_title') }} - Dominica Integrated Information System for Health{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DIISH">
+    <meta name="author" content="toconuts">
+    
+    <!-- The styles -->
+    {% block stylesheets %}
+    <link href="{{ asset('bootstrap/css/bootstrap.css') }}" type="text/css" rel="stylesheet" />
+    <style>
+    body {
+      padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      padding-bottom: 40px;
+    }
+    .sidebar-nav {
+      padding: 9px 0;
+    }
+
+    @media (max-width: 980px) {
+      /* Enable use of floated navbar text */
+      .navbar-text.pull-right {
+        float: none;
+        padding-left: 5px;
+        padding-right: 5px;
+      }
+    }
+    </style>
+    <link href="{{ asset('bootstrap/css/bootstrap-responsive.css') }}" type="text/css" rel="stylesheet" />
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery.ui.all.css" type="text/css" rel="stylesheet" />
+    {% endblock %}
+    
+    <!-- Fav and touch icons -->
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+
   </head>
 
   <body>
     {% if nodisp_navbar is not defined %}
-    <div class="navbar navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
           <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
@@ -110,7 +136,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> <!--/.fluid-container-->
     {% endif %}
       
     {% block body %}
@@ -121,6 +147,9 @@
       <p>&copy; HIU.MOH 2013</p>
     </footer>
     
+    <!-- The javacripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
     {% block javascripts %}
       <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
       <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>

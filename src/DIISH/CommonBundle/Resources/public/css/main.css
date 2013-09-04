@@ -44,9 +44,8 @@
 }
 
 footer {
-    clear: both;
-    margin-left: 35px;
-    margin-right: 35px;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .signin-box, .accountchooser-box {
