@@ -51,10 +51,15 @@
             {% set menu = null %}
           {% endif %}
           <a class="brand" href="{% if menu == 'home' %}{{ path('homepage') }}
+                                 {% elseif menu == 'openmrs' %}{{ path('products', {'productname': 'openmrs'}) }}
                                  {% elseif menu == 'scomdis' %}{{ path('scomdis') }}
-                                 {% elseif menu == 'pm1' %}{{ path('pm1') }}
-                                 {% elseif menu == 'eyebase' %}{{ path('eyebase') }}
-                                 {% elseif menu == 'admin' %}{{ path('admin') }}
+                                 {% elseif menu == 'ddms' %}{{ path('products', {'productname': 'ddms'}) }}
+                                 {% elseif menu == 'health_res' %}{{ path('products', {'productname': 'health_res'}) }}
+                                 {% elseif menu == 'public_health_res' %}{{ path('products', {'productname': 'public_health_res'}) }}
+                                 {% elseif menu == 'cmssm' %}{{ path('products', {'productname': 'cmssm'}) }}
+                                 {% elseif menu == 'mortality' %}{{ path('products', {'productname': 'mortality'}) }}
+                                 {#{% elseif menu == 'product8' %}{{ path('products', {'productname': 'product8'}) }}#}
+                                 {#{% elseif menu == 'product9' %}{{ path('products', {'productname': 'product9'}) }}#}
                                  {% endif %}">{{ block('product_name') }} </a>
           <div class="nav-collapse">
           {% block nav %}
@@ -64,7 +69,7 @@
             </li>
             <li class="{% if menu == 'openmrs' %}active{% endif %}">
               {% if app.user.username is defined %}
-              <a href="http://192.168.118.84:8080/openmrs" target="_blank">OpenMRS</a>
+              <a href="{{ path('products', {'productname': 'openmrs'}) }}">OpenMRS</a>
               {% else %}
               <p>OpenMRS</p>
               {% endif %}
@@ -78,35 +83,35 @@
             </li>
             <li class="{% if menu == 'ddms' %}active{% endif %}">
               {% if app.user.username is defined %}
-              <a href="http://192.168.118.42:8080/share" target="_blank">DDMS</a>
+              <a href="{{ path('products', {'productname': 'ddms'}) }}">DDMS</a>
               {% else %}
               <p>DDMS</p>
               {% endif %}
             </li>
             <li class="{% if menu == 'health_res' %}active{% endif %}">
               {% if app.user.username is defined %}
-              <a href="http://192.168.118.57/healthres" target="_blank">HealthRes</a>
+              <a href="{{ path('products', {'productname': 'health_res'}) }}">HealthRes</a>
               {% else %}
               <p>HealthRes</p>
               {% endif %}
             </li>
             <li class="{% if menu == 'public_health_res' %}active{% endif %}">
               {% if app.user.username is defined %}
-              <a href="http://192.168.118.57/publichealthres" target="_blank">Public HealthRes</a>
+                <a href="{{ path('products', {'productname': 'public_health_res'}) }}">Public HealthRes</a>
               {% else %}
               <p>Public HealthRes</p>
               {% endif %}
             </li>
             <li class="{% if menu == 'cmssm' %}active{% endif %}">
               {% if app.user.username is defined %}
-              <a href="http://192.168.118.57/cmssm" target="_blank">CMSSM</a>
+              <a href="{{ path('products', {'productname': 'cmssm'}) }}">CMSSM</a>
               {% else %}
               <p>CMSSM</p>
               {% endif %}
             </li>
             <li class="{% if menu == 'mortality' %}active{% endif %}">
               {% if app.user.username is defined %}
-              <a href="http://192.168.118.46/reports/mortality" target="_blank">Mortality</a>
+              <a href="{{ path('products', {'productname': 'mortality'}) }}">Mortality</a>
               {% else %}
               <p>Mortality</p>
               {% endif %}
