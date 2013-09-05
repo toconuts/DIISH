@@ -5,7 +5,6 @@
 {% set menu = menuName %}
 
 {% block body %}
-
 <div>
   <iframe name="disp" id="disp" src="{{ href }}" width="1280" height="1080" frameborder="0" scrolling="auto" />
 </div>
@@ -13,10 +12,9 @@
 
 {% block javascripts %}
   {{ parent() }}
-  
+
 <script>
-function iframeResize(){
-    alert("b");
+function iframeResize() {
     var PageHight = document.body.scrollHeight + 30;
     window.parent.document.getElementById('disp').style.height = PageHight + 'px';
     }
