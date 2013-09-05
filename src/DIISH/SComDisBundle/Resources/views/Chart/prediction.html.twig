@@ -8,7 +8,7 @@
 {% set sidebar_menu = 'scomdis_chart_prediction' %}
 
 {% block content %}
-<form target="_blank" action="{{ path('scomdis_chart_prediction') }}" method="post" class="form-horizontal">
+<form action="{{ path('scomdis_chart_prediction') }}" method="post" class="form-horizontal" onsubmit="target_popup(this, 'width=1080,height=800,left=100,top=100,directories=no,location=no,menubar=no,resizeable=yes,scrollbars=yes,status=no,titlebar=no,toolbar=no')">
   {{ form_errors(form) }}
   <div class="control-group {% if form.year_choices.vars.errors|length > 0 %}error{% endif %}">
     <label class="control-label">Target year</label>
