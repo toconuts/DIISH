@@ -2,18 +2,44 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    {% block stylesheets %}
-      <link href="{{ asset('bootstrap/css/bootstrap.css') }}" type="text/css" rel="stylesheet" />
-      <link href="{{ asset('bootstrap/css/bootstrap-responsive.css') }}" type="text/css" rel="stylesheet" />
-      <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery.ui.all.css" type="text/css" rel="stylesheet" />
-    {% endblock %}
     <title>{% block title %}{{ block('page_title') }} - Dominica Integrated Information System for Health{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DIISH">
+    <meta name="author" content="toconuts">
+    
+    <!-- The styles -->
+    {% block stylesheets %}
+    <link href="{{ asset('bootstrap/css/bootstrap.css') }}" type="text/css" rel="stylesheet" />
+    <style>
+    body {
+      padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      padding-bottom: 40px;
+    }
+    .sidebar-nav {
+      padding: 9px 0;
+    }
+
+    @media (max-width: 980px) {
+      /* Enable use of floated navbar text */
+      .navbar-text.pull-right {
+        float: none;
+        padding-left: 5px;
+        padding-right: 5px;
+      }
+    }
+    </style>
+    <link href="{{ asset('bootstrap/css/bootstrap-responsive.css') }}" type="text/css" rel="stylesheet" />
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery.ui.all.css" type="text/css" rel="stylesheet" />
+    {% endblock %}
+    
+    <!-- Fav and touch icons -->
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+
   </head>
 
   <body>
     {% if nodisp_navbar is not defined %}
-    <div class="navbar navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
           <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
@@ -25,10 +51,15 @@
             {% set menu = null %}
           {% endif %}
           <a class="brand" href="{% if menu == 'home' %}{{ path('homepage') }}
+                                 {% elseif menu == 'openmrs' %}{{ path('products', {'productname': 'openmrs'}) }}
                                  {% elseif menu == 'scomdis' %}{{ path('scomdis') }}
-                                 {% elseif menu == 'pm1' %}{{ path('pm1') }}
-                                 {% elseif menu == 'eyebase' %}{{ path('eyebase') }}
-                                 {% elseif menu == 'admin' %}{{ path('admin') }}
+                                 {% elseif menu == 'ddms' %}{{ path('products', {'productname': 'ddms'}) }}
+                                 {% elseif menu == 'health_res' %}{{ path('products', {'productname': 'health_res'}) }}
+                                 {% elseif menu == 'public_health_res' %}{{ path('products', {'productname': 'public_health_res'}) }}
+                                 {% elseif menu == 'cmssm' %}{{ path('products', {'productname': 'cmssm'}) }}
+                                 {% elseif menu == 'mortality' %}{{ path('products', {'productname': 'mortality'}) }}
+                                 {#{% elseif menu == 'product8' %}{{ path('products', {'productname': 'product8'}) }}#}
+                                 {#{% elseif menu == 'product9' %}{{ path('products', {'productname': 'product9'}) }}#}
                                  {% endif %}">{{ block('product_name') }} </a>
           <div class="nav-collapse">
           {% block nav %}
@@ -38,7 +69,7 @@
             </li>
             <li class="{% if menu == 'openmrs' %}active{% endif %}">
               {% if app.user.username is defined %}
-              <a href="http://192.168.118.84:8080/openmrs" target="_blank">OpenMRS</a>
+              <a href="{{ path('products', {'productname': 'openmrs'}) }}">OpenMRS</a>
               {% else %}
               <p>OpenMRS</p>
               {% endif %}
@@ -52,35 +83,35 @@
             </li>
             <li class="{% if menu == 'ddms' %}active{% endif %}">
               {% if app.user.username is defined %}
-              <a href="http://192.168.118.42:8080/share" target="_blank">DDMS</a>
+              <a href="{{ path('products', {'productname': 'ddms'}) }}">DDMS</a>
               {% else %}
               <p>DDMS</p>
               {% endif %}
             </li>
             <li class="{% if menu == 'health_res' %}active{% endif %}">
               {% if app.user.username is defined %}
-              <a href="http://192.168.118.57/healthres" target="_blank">HealthRes</a>
+              <a href="{{ path('products', {'productname': 'health_res'}) }}">HealthRes</a>
               {% else %}
               <p>HealthRes</p>
               {% endif %}
             </li>
             <li class="{% if menu == 'public_health_res' %}active{% endif %}">
               {% if app.user.username is defined %}
-              <a href="http://192.168.118.57/publichealthres" target="_blank">Public HealthRes</a>
+                <a href="{{ path('products', {'productname': 'public_health_res'}) }}">Public HealthRes</a>
               {% else %}
               <p>Public HealthRes</p>
               {% endif %}
             </li>
             <li class="{% if menu == 'cmssm' %}active{% endif %}">
               {% if app.user.username is defined %}
-              <a href="http://192.168.118.57/cmssm" target="_blank">CMSSM</a>
+              <a href="{{ path('products', {'productname': 'cmssm'}) }}">CMSSM</a>
               {% else %}
               <p>CMSSM</p>
               {% endif %}
             </li>
             <li class="{% if menu == 'mortality' %}active{% endif %}">
               {% if app.user.username is defined %}
-              <a href="http://192.168.118.46/reports/mortality" target="_blank">Mortality</a>
+              <a href="{{ path('products', {'productname': 'mortality'}) }}">Mortality</a>
               {% else %}
               <p>Mortality</p>
               {% endif %}
@@ -110,9 +141,9 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> <!--/.fluid-container-->
     {% endif %}
-      
+
     {% block body %}
     {% endblock %}
       
@@ -121,11 +152,20 @@
       <p>&copy; HIU.MOH 2013</p>
     </footer>
     
+    <!-- The javacripts
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
     {% block javascripts %}
-      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-      <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
-      <script src="{{ asset('/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
-      <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+    <script src="{{ asset('/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script>
+    function target_popup(form, specs) {
+        window.open('', 'formpopup', specs);
+        form.target = 'formpopup';
+    }
+    </script>
     {% endblock %}    
   </body>
 </html>

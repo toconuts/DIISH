@@ -1,0 +1,25 @@
+{% extends 'DIISHCommonBundle::layout.html.twig' %}
+
+{% block page_title productName %}
+{% block product_name productName %}
+{% set menu = menuName %}
+
+{% block body %}
+<div>
+  <iframe name="disp" id="disp" src="{{ href }}" width="1280" height="1080" frameborder="0" scrolling="auto" />
+</div>
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+
+<script>
+function iframeResize() {
+    var PageHight = document.body.scrollHeight + 30;
+    window.parent.document.getElementById('disp').style.height = PageHight + 'px';
+    }
+    var PageWidth = document.body.scrollWidth + 30;
+    window.parent.document.getElementById('disp').style.width = PageWidth + 'px';
+    window.onload = iframeResize;
+</script>
+{% endblock %}
