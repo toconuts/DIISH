@@ -5,12 +5,7 @@ Welcome to the DIISH!
 
 History
 ----------------------------------
-v1.4.0 - 05/09/2013
-v1.3.0 - 02/09/2013  
-v1.2.1 - 02/09/2013  
-v1.2.0 - 02/09/2013  
-v1.1.0 - 29/08/2013  
-v1.0.0 - 26/08/2013  
+See [History][4].
 
 
 Install
@@ -40,3 +35,4 @@ Configure the parameters under the `imag_ldap` section to match your LDAP server
 [1]:  https://github.com/toconuts/DIISH.git
 [2]:  https://github.com/toconuts/DIISH/archive/develop.zip
 [3]:  http://symfony.com/doc/2.3/book/installation.html
+[4]:  HISTORY.md
