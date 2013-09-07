@@ -5,7 +5,7 @@
   {% endif %}
   <div class="product1">
     {% if app.user.username is defined %}
-    <a href="{{ path('products', {'productname': 'openmrs'}) }}">OpenMRS</a>
+     <a href="http://192.168.118.84:8080/openmrs" target="_blank">OpenMRS</a>
     {% else %}
     <h3>OpenMRS</h3>
     {% endif %}
@@ -17,37 +17,37 @@
       <h3>SComDis</h3>
     {% endif %}
   </div>
-  <div class="product3">
+    <div class="product3">
     {% if app.user.username is defined %}
-      <a href="{{ path('products', {'productname': 'ddms'}) }}">DDMS</a>
+      <a href="http://192.168.118.42:8080/share" target="_blank">DDMS</a>
     {% else %}
       <h3>DDMS</h3>
     {% endif %}
   </div>
   <div class="product4">
     {% if app.user.username is defined %}
-      <a href="{{ path('products', {'productname': 'health_res'}) }}">HealthRes</a>
+      <a href="http://192.168.118.57/healthres" target="_blank">HealthRes</a>
     {% else %}
       <h3>HealthRes</h3>
     {% endif %}
   </div>
   <div class="product5">
     {% if app.user.username is defined %}
-      <a href="{{ path('products', {'productname': 'public_health_res'}) }}">Public HealthRes</a>
+      <a href="http://192.168.118.57/publichealthres" target="_blank">Public HealthRes</a>
     {% else %}
       <h3>Public HealthRes</h3>
     {% endif %}
   </div>
   <div class="product6">
     {% if app.user.username is defined %}
-      <a href="{{ path('products', {'productname': 'cmssm'}) }}">CMSSM</a>
+      <a href="http://192.168.118.57/cmssm" target="_blank">CMSSM</a>
     {% else %}
       <h3>CMSSM</h3>
     {% endif %}
   </div>
   <div class="product7">
     {% if app.user.username is defined %}
-      <a href="{{ path('products', {'productname': 'mortality'}) }}">Mortality</a>
+      <a href="http://192.168.118.46/reports/mortality" target="_blank">Mortality</a>
     {% else %}
       <h3>Mortality</h3>
     {% endif %}
