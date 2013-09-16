@@ -17,7 +17,7 @@
           {% for s in lineChart.seriesNames %}{% if loop.index0 == 0 %} ['{{ s | raw }}'{% else %}, '{{ s | raw }}'{% endif %}{% endfor %}, ''],
           {% for week in lineChart.lineChartData %}[{% for value in week %}{% if loop.index0 == 0 %}'{{ value }}'{% else %}, {% if value == -1 %} {% else %}{{ value }}{% endif %}{% endif %}{% endfor %}, 0],{% endfor %}
         ]);
-      
+
         new google.visualization.LineChart(document.getElementById('visualization')).
             draw(data, {title: '{{ lineChart.title | raw }}',
                         titleTextStyle: {color: 'gray', fontName: 'Arial', fontSize: 20},
@@ -25,8 +25,11 @@
                         fontName: 'Arial',
                         curveType: "none",
                         pointSize: 2,
-                        width: 1280, 
+                        width: 1280,
                         height: 720,
+                        {% if chartType == 'detection' %}
+                        colors:['blue', 'orange', 'red'],
+                        {% endif %}
                         vAxis: {maxValue: {% if lineChart.maxValue == 0 %}10{% else %}{{ lineChart.maxValue }}{% endif %},
                                 minValue: 0,
                                 textStyle: {color: 'gray', fontName: 'Arial', fontSize: 10},
