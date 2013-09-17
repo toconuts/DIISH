@@ -80,7 +80,8 @@ class EpidemicPhaseService
                 $criteria->getYearChoices(),
                 $criteria->isUseNoRecords(),
                 $criteria->isUseLandwideSD(),
-                $criteria->isShowIslandwide()
+                $criteria->isShowIslandwide(),
+                $criteria->isShowOnlyIslandwide()
         );
         
         if ($criteria->isModeSpecificWeek()) {
@@ -93,9 +94,10 @@ class EpidemicPhaseService
         
         $this->setDistricts($epidemicPhase, $criteria);
         
-        if ($criteria->isModeSpecificWeek())
+        if ($criteria->isModeSpecificWeek()) {
             $this->mergePMH($epidemicPhase);
-
+        }
+        
         $this->setPhase($epidemicPhase);
         
         $epidemicPhase->analyzeCoefficient();
@@ -182,7 +184,7 @@ class EpidemicPhaseService
     {
         $epidemicPhaseDistricts = null;
 
-        foreach($districts as $district) {
+        foreach ($districts as $district) {
             $epidemicPhaseDistrict = new EpidemicPhaseDistrict($epidemicPhase, $district);
             $epidemicPhaseDistrict->setClinics($this->createEpidemicPhaseClinic($epidemicPhase, $district, $years));
             $epidemicPhaseDistricts[$district->getId()] = $epidemicPhaseDistrict;

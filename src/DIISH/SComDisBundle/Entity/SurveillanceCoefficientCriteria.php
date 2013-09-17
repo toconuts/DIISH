@@ -58,6 +58,11 @@ class SurveillanceCoefficientCriteria
     private $showIslandwide;
     
     /**
+     * @var bool $showOnlyIslandwide
+     */
+    private $showOnlyIslandwide;
+    
+    /**
      * @var bool $modeSpecificWeek;
      */
     private $modeSpecificWeek;
@@ -79,6 +84,7 @@ class SurveillanceCoefficientCriteria
         $this->useNoRecords = true;
         $this->useLandwideSD = false;
         $this->showIslandwide = false;
+        $this->showOnlyIslandwide = false;
         $this->modeSpecificWeek = false;
     }
     
@@ -266,6 +272,24 @@ class SurveillanceCoefficientCriteria
         return $this->showIslandwide;
     }
     
+    /**
+     * Set showIslandewide
+     * 
+     * @param bool $value
+     */
+    public function setShowOnlyIslandwide($value)
+    {
+        $this->showOnlyIslandwide = $value;
+    }
+    
+    /**
+     * Check showIslandewide is true or false
+     * @return bool
+     */
+    public function isShowOnlyIslandwide()
+    {
+        return $this->showOnlyIslandwide;
+    }
     /**
      * Set modeSpecificWeek
      * 

@@ -12,11 +12,12 @@
 </script>
 <script type="text/javascript">
   function drawVisualization() {
+
     var data = google.visualization.arrayToDataTable([
-      ['weak'{% for district in epidemicPhase.districts[1] %}{% if (epidemicPhase.showIslandwide == false) and (district.id == 0) %}{% else %}, '{{ district.name | raw }}'{% endif %}{% endfor %}, ''],
-      [0{% for district in epidemicPhase.districts[1] %}{% if (epidemicPhase.showIslandwide == false) and (district.id == 0) %}{% else %}, 0{% endif %}{% endfor %}, 0],
+      ['weak'{% for district in epidemicPhase.districts[1] %}{% if ((district.id == 0) and ((epidemicPhase.showOnlyIslandwide == false) and (epidemicPhase.showIslandwide == false))) or ((district.id != 0) and (epidemicPhase.showOnlyIslandwide == true)) %}{% else %}, '{{ district.name | raw }}'{% endif %}{% endfor %}, ''],
+      [0{% for district in epidemicPhase.districts[1] %}{% if ((district.id == 0) and ((epidemicPhase.showOnlyIslandwide == false) and (epidemicPhase.showIslandwide == false))) or ((district.id != 0) and (epidemicPhase.showOnlyIslandwide == true)) %}{% else %}, 0{% endif %}{% endfor %}, 0],
       {% for week, districts in epidemicPhase.districts %}
-      [{{ week }}{% for district in districts %}{% if (epidemicPhase.showIslandwide == false) and (district.id == 0) %}{% else %}, {{ district.coefficient }}{% endif %}{% endfor %}, 0],
+      [{{ week }}{% for district in districts %}{% if ((district.id == 0) and ((epidemicPhase.showOnlyIslandwide == false) and (epidemicPhase.showIslandwide == false))) or ((district.id != 0) and (epidemicPhase.showOnlyIslandwide == true)) %}{% else %}, {{ district.coefficient }}{% endif %}{% endfor %}, 0],
       {% endfor %}
     ]);
 
@@ -36,7 +37,7 @@
                             textStyle: {color: 'gray', fontName: 'Arial', fontSize: 10},
                             slantedText: true
                     },
-                    series: { {% if epidemicPhase.showIslandwide == true %}{{ epidemicPhase.districts[1] | length }}{% else %}{{ (epidemicPhase.districts[1] | length) - 1}}{% endif %}:{lineWidth: 0, pointSize: 0, visibleInLegend: false}},
+                    series: { {% if epidemicPhase.showOnlyIslandwide == true %}1{% elseif epidemicPhase.showIslandwide == true %}{{ epidemicPhase.districts[1] | length }}{% else %}{{ (epidemicPhase.districts[1] | length) - 1}}{% endif %}:{lineWidth: 0, pointSize: 0, visibleInLegend: false}},
                     chartArea: {left:20, top:130, width:'60%', height:'60%'},
     });
   }
@@ -71,7 +72,7 @@
       </tr>
       <tr>
       <th>Note: </th>
-      <td>Calc. no records as 0 case option={% if epidemicPhase.useNoRecord  == true %}on{% else %}off{% endif %}, Calc. coefficient using islandwide SD and average that devided by population ratio option={% if epidemicPhase.useLandwideSD == true %}on{% else %}off{% endif %}, Show islandwide option={% if epidemicPhase.showIslandwide == true %}on{% else %}off{% endif %}</td>
+      <td>Calc. no records as 0 case option={% if epidemicPhase.useNoRecord  == true %}on{% else %}off{% endif %}, Calc. coefficient using islandwide SD and average that devided by population ratio option={% if epidemicPhase.useLandwideSD == true %}on{% else %}off{% endif %}, Show Only islandwide option={% if epidemicPhase.showOnlyIslandwide == true %}on{% else %}off{% endif %}{% if epidemicPhase.showOnlyIslandwide == false %}, Show islandwide option={% if epidemicPhase.showIslandwide == true %}on{% else %}off{% endif %}{% endif %}</td>
       </tr>
     </tbody>
   </table>
@@ -139,7 +140,7 @@
       <tr>
         <th rowspan="2">Week</th>
         {% for district in epidemicPhase.districts[1] %}
-          {% if (epidemicPhase.showIslandwide == false) and (district.id == 0) %}{% else %}
+          {% if ((district.id == 0) and ((epidemicPhase.showOnlyIslandwide == false) and (epidemicPhase.showIslandwide == false))) %}{% else %}
           <th colspan="6">{{ district.name }}</th>
           {% endif %}
         {% endfor %}
@@ -147,7 +148,7 @@
       </tr>
       <tr>
         {% for district in epidemicPhase.districts[1] %}
-          {% if (epidemicPhase.showIslandwide == false) and (district.id == 0) %}{% else %}
+          {% if ((district.id == 0) and ((epidemicPhase.showOnlyIslandwide == false) and (epidemicPhase.showIslandwide == false))) %}{% else %}
           <th>T</th>
           <th>C</th>
           <th>NUM</th>
@@ -163,7 +164,7 @@
       <tr>
       <td>{{ week }}</td>
       {% for district in districts %}
-        {% if (epidemicPhase.showIslandwide == false) and (district.id == 0) %}{% else %}
+        {% if ((district.id == 0) and ((epidemicPhase.showOnlyIslandwide == false) and (epidemicPhase.showIslandwide == false))) %}{% else %}
         <td>{{ district.totalOfTargetCases }}</td>
         <td>{{ district.totalOfCalcCases }}</td>
         <td>{{ district.numberOfCalcCases }}</td>
