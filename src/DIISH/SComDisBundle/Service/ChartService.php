@@ -83,7 +83,7 @@ class ChartService
         
         $targetYearData = $this->getTargetYearData($criteria);
         $predictionData = $this->getPredictionData($targetYearData, $criteria);
-        $lineChart->setData($predictionData);
+        $lineChart->setData($predictionData, true);
         
         return $lineChart;
     }
@@ -127,7 +127,7 @@ class ChartService
             }
         } else { // for prediction
             $targetYear = $lineChart->getYear();
-            $seriesNames = array("Number in $targetYear", "Average", "Threshold");
+            $seriesNames = array("Number in $targetYear", "Total of calc. year", "Sample Size", "Average", "Std Deviation", "Margin of Error","Threshold");
         }
         
         $lineChart->setSeriesNames($seriesNames);
@@ -213,7 +213,7 @@ class ChartService
         // CalcData = [year][week][series = 0]
         $calcData = $this->getTrendChartData($criteria, -1);
         
-        $series = array_fill(0, 3/*Number, AVG, Threshold*/, 0);
+        $series = array_fill(0, 7/*Number, total number of calc, SampleSize, AVG, STD, MoE, Threshold*/, 0);
         
         $weeks = array();
         $prediction = array();
@@ -246,24 +246,27 @@ class ChartService
             // Number
             $prediction[$criteria->getTargetYear()][$week][0] = $targetYearData[$criteria->getTargetYear()][$week][0];
             
-            // Avg
-            if (count($values) > 0) {
-                $prediction[$criteria->getTargetYear()][$week][1] = round((float)(array_sum($values) / count($values)), 2);
-            } else {
+            // Total number of calc. year
+            $prediction[$criteria->getTargetYear()][$week][1] = array_sum($values);
+            
+            // Sample Size
+            if (count($values) < 2) { // Because of sample = true = (n - 1) when calcurate STDDEV. 
                 $message = "Can not calculate average because there are not enough records. Week: ${week}. Please try to check \"no records as 0 case\" option.";
                 throw new \InvalidArgumentException($message);
             }
+            $prediction[$criteria->getTargetYear()][$week][2] = count($values);
+            
+            // Avg
+            $prediction[$criteria->getTargetYear()][$week][3] = round((float)($prediction[$criteria->getTargetYear()][$week][1] / $prediction[$criteria->getTargetYear()][$week][2]), 2);
+            
+            // Standard Deviation
+            $prediction[$criteria->getTargetYear()][$week][4] = round(CommonUtils::staticsStandardDeviation($values, true), 2);
+            
+            // Margin of Error
+            $prediction[$criteria->getTargetYear()][$week][5] = round(($prediction[$criteria->getTargetYear()][$week][4] * $confidenceCoefficient) / sqrt(count($values)), 2);
             
             // Threshold
-            if (count($values) > 1) { // Because of sample = true = (n - 1) 
-                $prediction[$criteria->getTargetYear()][$week][2] = round($weekSet[1] + 
-                    (CommonUtils::staticsStandardDeviation($values, true) 
-                    * $confidenceCoefficient), 2);
-            } else {
-                $message = "Can not calculate threshold because there are not enough records. Week: ${week}. Please try to check \"no records as 0 case\" option.";
-                throw new \InvalidArgumentException($message);
-            }
-            
+            $prediction[$criteria->getTargetYear()][$week][6] = $prediction[$criteria->getTargetYear()][$week][3] + $prediction[$criteria->getTargetYear()][$week][5];            
         }
         
         return $prediction;

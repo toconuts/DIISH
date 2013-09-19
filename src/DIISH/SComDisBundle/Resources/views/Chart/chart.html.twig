@@ -13,9 +13,13 @@
     <script type="text/javascript">
       function drawVisualization() {
         var data = google.visualization.arrayToDataTable([
-          {% set first_time = true %}
-          {% for s in lineChart.seriesNames %}{% if loop.index0 == 0 %} ['{{ s | raw }}'{% else %}, '{{ s | raw }}'{% endif %}{% endfor %}, ''],
-          {% for week in lineChart.lineChartData %}[{% for value in week %}{% if loop.index0 == 0 %}'{{ value }}'{% else %}, {% if value == -1 %} {% else %}{{ value }}{% endif %}{% endif %}{% endfor %}, 0],{% endfor %}
+          {% if chartType == 'trend' %}
+            {% for s in lineChart.seriesNames %}{% if loop.index0 == 0 %} ['{{ s | raw }}'{% else %}, '{{ s | raw }}'{% endif %}{% endfor %}, ''],
+            {% for week in lineChart.lineChartData %}[{% for value in week %}{% if loop.index0 == 0 %}'{{ value }}'{% else %}, {% if value == -1 %} {% else %}{{ value }}{% endif %}{% endif %}{% endfor %}, 0],{% endfor %}
+          {% elseif chartType == 'detection' %}
+            {% for s in lineChart.seriesNames %}{% if loop.index0 == 0 %} ['{{ s | raw }}'{% elseif loop.index0 == 1 or loop.index0 == 4 or loop.index0 == 7 %}, '{{ s | raw }}'{% endif %}{% endfor %}, ''],
+            {% for week in lineChart.lineChartData %}[{% for value in week %}{% if loop.index0 == 0 %}'{{ value }}'{% elseif loop.index0 == 1 or loop.index0 == 4 or loop.index0 == 7 %}, {% if value == -1 %} {% else %}{{ value }}{% endif %}{% endif %}{% endfor %}, 0],{% endfor %}
+          {% endif %}
         ]);
 
         new google.visualization.LineChart(document.getElementById('visualization')).
@@ -38,7 +42,11 @@
                                 textStyle: {color: 'gray', fontName: 'Arial', fontSize: 10}
                                 , slantedText: true
                         },
+                        {% if chartType == 'trend' %}
                         series: { {{ (lineChart.seriesNames | length) - 1 }}:{lineWidth: 0, pointSize: 0, visibleInLegend: false}},
+                        {% elseif chartType == 'detection' %}
+                        series: { 3:{lineWidth: 0, pointSize: 0, visibleInLegend: false}},
+                        {% endif %}
                         chartArea: {left:20, top:130, width:'60%', height:'60%'},
         });
       }
