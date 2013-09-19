@@ -7,6 +7,25 @@
 {% set menu = 'SComDis' %}
 {% set sidebar_menu = 'scomdis_chart_coefficient' %}
 
+{% block javascripts %}
+  {{ parent() }}
+<script>
+$('#SurveillanceCoefficient_showOnlyIslandwide').change(function() {
+    if (this.checked) {
+        $('#SurveillanceCoefficient_showIslandwide').attr("disabled", 'disabled');
+    } else {
+        $('#SurveillanceCoefficient_showIslandwide').removeAttr("disabled");
+    }
+});
+</script>
+
+<script>
+$(document).ready(function() {
+  $('#SurveillanceCoefficient_showOnlyIslandwide').trigger('change');
+});
+</script>
+{% endblock %}
+
 {% block content %}
 <form action="{{ path('scomdis_chart_coefficient') }}" method="post" class="form-horizontal" onsubmit="target_popup(this, 'width=1080,height=800,left=100,top=100,directories=no,location=no,menubar=no,resizeable=yes,scrollbars=yes,status=no,titlebar=no,toolbar=no')">
   {{ form_errors(form) }}
@@ -57,9 +76,15 @@
     </div>
   </div>
   <div class="control-group">
+    {{ form_errors(form.showOnlyIslandwide) }}
+    <div class="controls">
+    <label class='checkbox'>{{ form_widget(form.showOnlyIslandwide) }}Show only islandwide coefficient</label>    
+    </div>
+  </div>
+  <div class="control-group">
     {{ form_errors(form.showIslandwide) }}
     <div class="controls">
-    <label class='checkbox'>{{ form_widget(form.showIslandwide) }}Show Islandwide coefficient on the chart</label>
+    <label class='checkbox' id='islandwide'>{{ form_widget(form.showIslandwide) }}Show islandwide coefficient on the chart</label>
     </div>
   </div>
   {{ form_widget(form._token) }}

@@ -52,6 +52,7 @@ class ChartController extends AppController
 
             return $this->render('DIISHSComDisBundle:Chart:chart.html.twig', array(
                 'lineChart' => $lineChart,
+                'chartType' => 'trend',
             ));
         }
         
@@ -88,6 +89,7 @@ class ChartController extends AppController
 
             return $this->render('DIISHSComDisBundle:Chart:chart.html.twig', array(
                 'lineChart' => $lineChart,
+                'chartType' => 'detection',
             ));                
         }
         
@@ -130,6 +132,7 @@ class ChartController extends AppController
 
             return $this->render('DIISHSComDisBundle:Chart:seasonalCoefficient.html.twig', array(
                 'epidemicPhase' => $epidemicPhase,
+                'chartType' => 'coefficient',
             ));
 
         }

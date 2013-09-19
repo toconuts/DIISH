@@ -3,9 +3,14 @@ HISTORY
 
 CHANGES
 ----------------------------------
+### v1.5.0 (2013-09-19)
+    * Fix calculation of detection chart.
+    * Change chart colors of detection chart.
+    * Add only show islandwide option to seasonal coefficient chart.
+
 ### v1.4.1-Hotfix (2013-09-09)
     * Switch back to product link.
-    * Add README.md file.
+    * Add HISTORY.md file.
 
 ### v1.4.0 (2013-09-05)
     * Provide navigation bar for all products.

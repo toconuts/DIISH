@@ -48,6 +48,11 @@ class EpidemicPhase
     private $showIslandwide;
     
     /**
+     * @var boolean $showOnlyIslandewide
+     */
+    private $showOnlyIslandewide;
+    
+    /**
      * @var array $districts 
      */
     private $districts;
@@ -61,24 +66,49 @@ class EpidemicPhase
      * @var PMH $pmh 
      */
     private $pmh;
-    
+
+    /**
+     * @var float $maxCoefficientValue
+     */
     private $maxCoefficientValue;
     
+    /**
+     * @var float $minCoefficientValue
+     */
     private $minCoefficientValue;
     
+    /**
+     * @var array $messages
+     */
     private $messages;
     
+    /**
+     * @var array $phases
+     */
     private $phases;
 
-    public function __construct($year, $weekOfYear, array $calcYears, $useNorecord = true, $useLandwideSD = false, $showIslandwide = false)
+    /**
+     * Constructor
+     * 
+     * @param string $year
+     * @param string $weekOfYear
+     * @param array $calcYears
+     * @param boolean $useNorecord
+     * @param boolean $useLandwideSD
+     * @param boolean $showIslandwide
+     * @param boolean $showOnlyIslandewide
+     */
+    public function __construct($year, $weekOfYear, array $calcYears, $useNorecord = true, $useLandwideSD = false, $showIslandwide = false, $showOnlyIslandewide = false)
     {
         $this->title = "title";
+        
         $this->year = $year;
         $this->weekOfYear = $weekOfYear;
         $this->calcYears = $calcYears;
         $this->useNoRecord = $useNorecord;
         $this->useLandwideSD = $useLandwideSD;
         $this->showIslandwide = $showIslandwide;
+        $this->showOnlyIslandewide = $showOnlyIslandewide;
         
         $this->districts = array();
         $this->syndromes = array();
@@ -228,6 +258,26 @@ class EpidemicPhase
     public function isShowIslandwide()
     {
         return $this->showIslandwide;
+    }
+    
+    /**
+     * Set showOnlyIslandwide
+     *
+     * @param boolean $showOnlyIslandwide
+     */
+    public function setShowOnlyIslandwide($value)
+    {
+        $this->showOnlyIslandewide = $value;
+    }
+    
+    /**
+     * Get showOnlyIslandwide
+     *
+     * @return boolean $showOnlyIslandwide
+     */
+    public function isShowOnlyIslandwide()
+    {
+        return $this->showOnlyIslandewide;
     }
     
     /**
