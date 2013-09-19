@@ -40,6 +40,9 @@ class SurveillanceCoefficientCriteriaType extends AbstractType
         $builder->add('showIslandwide', 'checkbox', array(
                   'required' => false,
         ));
+        $builder->add('showOnlyIslandwide', 'checkbox', array(
+                  'required' => false,
+        ));
     }
 
     /**
